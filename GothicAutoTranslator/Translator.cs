@@ -21,8 +21,11 @@ namespace GothicAutoTranslator
         private string _inputPath;
         private string _outputPath;
 
+        private int _inputEncoding;
+
         private static readonly HttpClient client = new HttpClient();
 
+        public event EventHandler<string> InfoEvt;
 
         private struct ItemData
         {
@@ -35,44 +38,71 @@ namespace GothicAutoTranslator
 
         private List<ItemData> _entries = new();
 
-        public Translator(string inputPath, string outputPath)
+        public Translator(string inputPath, string outputPath, int inputEncoding)
         {
             _inputPath = inputPath;
             _outputPath = outputPath;
+            _inputEncoding = inputEncoding;
         }
 
+        public long TotalCharacters => _entries?.Sum(x => x.Text.Length) ?? 0;
 
-        public void Analyze()
+
+        private void AnalyzeSingleFile(string file, ref int total)
         {
-            string[] files = Directory.GetFiles(_inputPath);
+            StreamReader sr = new StreamReader(file, Encoding.GetEncoding(_inputEncoding));
+
+            string line;
+            int lineNum = 0;
+            while ((line = sr.ReadLine()) != null)
+            {
+                var m = GothicPatterns.MatchAny(line);
+                if (!m.HasValue) continue;
+
+                string text = m.Value.Match.Groups[m.Value.GroupWithText].Value;
+
+                _entries.Add(new ItemData()
+                {
+                    File = file,
+                    Id = ++total,
+                    Line = ++lineNum,
+                    Text = text
+                });
+            }
+
+        }
+
+        public async Task AnalyzeAsync(IProgress<TranslationProgressModel> progress = null)
+        {
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+
+
+            // TODO: read it asynchronously
+
+            string[] files = Directory.GetFiles(_inputPath, "*.d", SearchOption.AllDirectories);
             int total = 0;
+
+            long totalToRead = files.Sum(x => new FileInfo(x).Length);
+            long dataRead = 0;
 
             foreach (string file in files)
             {
-                StreamReader sr = new StreamReader(file, Encoding.Default);
+                await Task.Run(() => AnalyzeSingleFile(file, ref total));
 
-                string line;
-                int lineNum = 0;
-                while ((line = sr.ReadLine()) != null)
+                FileInfo fi = new FileInfo(file);
+                dataRead += fi.Length;
+                progress?.Report(new TranslationProgressModel()
                 {
-                    var m = GothicPatterns.MatchAny(line);
-                    if (!m.HasValue) continue;
-
-                    string text = m.Value.Match.Groups[m.Value.GroupWithText].Value;
-
-                    _entries.Add(new ItemData()
-                    {
-                        File = file,
-                        Id = ++total,
-                        Line = ++lineNum,
-                        Text = text
-                    });
-                }
+                    Msg = $"Parsed file {fi.Name}",
+                    Percent = (int) (dataRead * 100 / totalToRead)
+                });
             }
-            
+
+            InfoEvt?.Invoke(this,$"All characters: {_entries.Sum(x => x.Text.Length)}");
+
         }
 
-        public async void Translate(string apiKey)
+        public async Task TranslateAsync(string apiKey)
         {
             var converter = new ExpandoObjectConverter();
             for (int i=0; i< _entries.Count; i++)
@@ -111,7 +141,7 @@ namespace GothicAutoTranslator
             
         }
 
-        public void Replace()
+        public async Task ReplaceAsync()
         {
             // foreach file if match then replace using the same 'i'
         }

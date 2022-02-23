@@ -10,6 +10,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Forms.VisualStyles;
 using GothicAutoTranslator;
 using GothicChecker;
 using GothicChecker.Models;
@@ -32,8 +33,11 @@ namespace ApplicationGUI
         private string _translateOutputPath;
         private string _apiKey;
 
+        private int _encoding;
+
         private DialogParser _dialogParser;
         private ItemParser _itemParser;
+        private Translator _translator;
 
         [DllImport("user32.dll")]
         static extern bool HideCaret(IntPtr hWnd);
@@ -46,7 +50,8 @@ namespace ApplicationGUI
             TextBoxPathsFromObject();
             InitEvents();
 
-            InfoLabel.GotFocus += (s1, e1) => { HideCaret(InfoLabel.Handle); };
+            DC_InfoLabel.GotFocus += (s1, e1) => { HideCaret(DC_InfoLabel.Handle); };
+            AT_InfoLabel.GotFocus += (s1, e1) => { HideCaret(AT_InfoLabel.Handle); };
 
         }
 
@@ -76,6 +81,7 @@ namespace ApplicationGUI
             _translateOutputPath = data["Paths"]["translateOutputPath"];
             _apiKey = data["GCP"]["ApiKey"];
 
+            _encoding = int.Parse(data["Encoding"]["InputScripts"]); // TODO: default if not set + message
         }
 
         private void DM_RunBtn_Click(object sender, EventArgs e)
@@ -102,7 +108,7 @@ namespace ApplicationGUI
             {
                 DisableButtons();
                 DC_ProgressBar.Value = 0;
-                InfoLabel.Text = "Parsing scripts...";
+                DC_InfoLabel.Text = "Parsing scripts...";
 
                 Progress<ParserProgressModel> progress = new();
                 progress.ProgressChanged += ProgressOnProgressChanged;
@@ -131,7 +137,7 @@ namespace ApplicationGUI
         {
             DC_ProgressBar.Value = e.Percent;
             DC_ProgressBarLbl.Text = $"{e.Percent}%";
-            InfoLabel.AppendText($"{Environment.NewLine}{e.Msg}");
+            DC_InfoLabel.AppendText($"{Environment.NewLine}{e.Msg}");
         }
 
         private void DC_SaveBtn_Click(object sender, EventArgs e)
@@ -196,7 +202,7 @@ namespace ApplicationGUI
             {
                 DisableButtons();
                 DC_ProgressBar.Value = 0;
-                InfoLabel.Text = "Parsing items...";
+                DC_InfoLabel.Text = "Parsing items...";
 
                 Progress<ParserProgressModel> progress = new();
                 progress.ProgressChanged += ProgressOnProgressChanged;
@@ -276,16 +282,76 @@ namespace ApplicationGUI
             FillPathTextBox(DC_ItemsLookupPath);
         }
 
-        private void AT_TranslateBtn_Click(object sender, EventArgs e)
+        private async void AT_TranslateBtn_Click(object sender, EventArgs e)
         {
-            Translator t = new Translator(_translateInputPath,_translateOutputPath);
-            t.Translate(_apiKey);
+            if (_translator == null)
+                return;
+
+            MessageBox.Show($"Total characters {_translator.TotalCharacters}");
+            if (_translator.TotalCharacters > 300000)
+            {
+                MessageBox.Show("Too many characters! Forbidden translation.");
+                return;
+            }
+
+            if (MessageBox.Show("Are you sure?", "", MessageBoxButtons.YesNo) != DialogResult.OK)
+                return;
+
+            await _translator.TranslateAsync(_apiKey);
         }
 
-        private void AT_AnalyzeBtn_Click(object sender, EventArgs e)
+        private async void AT_AnalyzeBtn_Click(object sender, EventArgs e)
         {
-            Translator t = new Translator(_translateInputPath, _translateOutputPath);
-            t.Analyze();
+            try
+            {
+                DisableATButtons();
+                AT_ProgressBar.Value = 0;
+                AT_InfoLabel.Text = "Analyzing scripts...";
+
+                Progress<TranslationProgressModel> progress = new();
+                progress.ProgressChanged += ProgressOnProgressChanged;
+
+                _translator = new Translator(_translateInputPath, _translateOutputPath, 1250); // TODO encoding
+                _translator.InfoEvt += (o, s) => { AT_SummaryLbl.Text = s; };
+
+                await _translator.AnalyzeAsync(progress);
+
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show("Error");
+            }
+            finally
+            {
+                EnableATButtons();
+            }
+
+        }
+
+        private void DisableATButtons()
+        {
+            AT_AnalyzeBtn.Enabled = false;
+            AT_TranslateBtn.Enabled = false;
+            AT_ReplaceBtn.Enabled = false;
+        }
+
+        private void EnableATButtons()
+        {
+            AT_AnalyzeBtn.Enabled = true;
+            AT_TranslateBtn.Enabled = true;
+            AT_ReplaceBtn.Enabled = true;
+        }
+
+        private void ProgressOnProgressChanged(object? sender, TranslationProgressModel e)
+        {
+            AT_ProgressBar.Value = e.Percent;
+            AT_ProgressBarLbl.Text = $"{e.Percent}%";
+            AT_InfoLabel.AppendText($"{Environment.NewLine}{e.Msg}");
+        }
+
+        private void AT_ReplaceBtn_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

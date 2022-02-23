@@ -1,4 +1,6 @@
 ﻿
+using System.Windows.Forms;
+
 namespace ApplicationGUI
 {
     partial class Form1
@@ -33,16 +35,23 @@ namespace ApplicationGUI
             this.DC_ParseBtn = new System.Windows.Forms.Button();
             this.DC_HideCompleted = new System.Windows.Forms.CheckBox();
             this.DC_PrintMissing = new System.Windows.Forms.CheckBox();
-            this.InfoLabel = new System.Windows.Forms.TextBox();
+            this.DC_InfoLabel = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.DM_FFmpegPath = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.DC_SaveBtn = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.AT_DstLangCombo = new System.Windows.Forms.ComboBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.AT_SrcLangCombo = new System.Windows.Forms.ComboBox();
+            this.label7 = new System.Windows.Forms.Label();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.DC_ProgressBarLbl = new System.Windows.Forms.Label();
             this.DC_ProgressBar = new System.Windows.Forms.ProgressBar();
             this.DC_ItemsLookupPathBtn = new System.Windows.Forms.Button();
             this.DC_ItemsLookupPath = new System.Windows.Forms.TextBox();
@@ -62,12 +71,16 @@ namespace ApplicationGUI
             this.DC_ParseItemsBtn = new System.Windows.Forms.Button();
             this.DC_ExcelBtn = new System.Windows.Forms.Button();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.AT_InfoLabel = new System.Windows.Forms.TextBox();
+            this.AT_ProgressBarLbl = new System.Windows.Forms.Label();
+            this.AT_ProgressBar = new System.Windows.Forms.ProgressBar();
             this.AT_ReplaceBtn = new System.Windows.Forms.Button();
             this.AT_AnalyzeBtn = new System.Windows.Forms.Button();
             this.AT_TranslateBtn = new System.Windows.Forms.Button();
-            this.DC_ProgressBarLbl = new System.Windows.Forms.Label();
+            this.AT_SummaryLbl = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            this.groupBox3.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -114,15 +127,15 @@ namespace ApplicationGUI
             this.DC_PrintMissing.Text = "Print missing";
             this.DC_PrintMissing.UseVisualStyleBackColor = true;
             // 
-            // InfoLabel
+            // DC_InfoLabel
             // 
-            this.InfoLabel.Location = new System.Drawing.Point(6, 227);
-            this.InfoLabel.Multiline = true;
-            this.InfoLabel.Name = "InfoLabel";
-            this.InfoLabel.ReadOnly = true;
-            this.InfoLabel.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.InfoLabel.Size = new System.Drawing.Size(754, 96);
-            this.InfoLabel.TabIndex = 1;
+            this.DC_InfoLabel.Location = new System.Drawing.Point(6, 227);
+            this.DC_InfoLabel.Multiline = true;
+            this.DC_InfoLabel.Name = "DC_InfoLabel";
+            this.DC_InfoLabel.ReadOnly = true;
+            this.DC_InfoLabel.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.DC_InfoLabel.Size = new System.Drawing.Size(754, 96);
+            this.DC_InfoLabel.TabIndex = 1;
             // 
             // groupBox1
             // 
@@ -177,12 +190,83 @@ namespace ApplicationGUI
             // 
             // groupBox3
             // 
-            this.groupBox3.Location = new System.Drawing.Point(211, 28);
+            this.groupBox3.Controls.Add(this.textBox2);
+            this.groupBox3.Controls.Add(this.textBox1);
+            this.groupBox3.Controls.Add(this.AT_DstLangCombo);
+            this.groupBox3.Controls.Add(this.label8);
+            this.groupBox3.Controls.Add(this.AT_SrcLangCombo);
+            this.groupBox3.Controls.Add(this.label7);
+            this.groupBox3.Location = new System.Drawing.Point(21, 19);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(250, 125);
+            this.groupBox3.Size = new System.Drawing.Size(291, 176);
             this.groupBox3.TabIndex = 8;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Autotranslator";
+            // 
+            // textBox2
+            // 
+            this.textBox2.Location = new System.Drawing.Point(186, 132);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(77, 27);
+            this.textBox2.TabIndex = 20;
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(185, 63);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(78, 27);
+            this.textBox1.TabIndex = 19;
+            // 
+            // AT_DstLangCombo
+            // 
+            this.AT_DstLangCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.AT_DstLangCombo.FormattingEnabled = true;
+            this.AT_DstLangCombo.Items.AddRange(new object[] {
+            "English (en)",
+            "Polish (pl)",
+            "German (de)",
+            "Russian (ru)",
+            "Czech (cs)",
+            "Other"});
+            this.AT_DstLangCombo.Location = new System.Drawing.Point(26, 132);
+            this.AT_DstLangCombo.Name = "AT_DstLangCombo";
+            this.AT_DstLangCombo.Size = new System.Drawing.Size(151, 28);
+            this.AT_DstLangCombo.TabIndex = 18;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(26, 109);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(119, 20);
+            this.label8.TabIndex = 17;
+            this.label8.Text = "Target Language";
+            // 
+            // AT_SrcLangCombo
+            // 
+            this.AT_SrcLangCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.AT_SrcLangCombo.FormattingEnabled = true;
+            this.AT_SrcLangCombo.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.AT_SrcLangCombo.Items.AddRange(new object[] {
+            "Polish (pl)",
+            "English (en)",
+            "German (de)",
+            "Russian (ru)",
+            "Czech (cs)",
+            "Other"});
+            this.AT_SrcLangCombo.Location = new System.Drawing.Point(28, 63);
+            this.AT_SrcLangCombo.Name = "AT_SrcLangCombo";
+            this.AT_SrcLangCombo.Size = new System.Drawing.Size(151, 28);
+            this.AT_SrcLangCombo.TabIndex = 16;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(27, 36);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(126, 20);
+            this.label7.TabIndex = 0;
+            this.label7.Text = "Source Language:";
             // 
             // tabControl1
             // 
@@ -230,7 +314,7 @@ namespace ApplicationGUI
             this.tabPage2.Controls.Add(this.DC_ParseItemsBtn);
             this.tabPage2.Controls.Add(this.DC_ExcelBtn);
             this.tabPage2.Controls.Add(this.DC_SaveBtn);
-            this.tabPage2.Controls.Add(this.InfoLabel);
+            this.tabPage2.Controls.Add(this.DC_InfoLabel);
             this.tabPage2.Controls.Add(this.DC_ParseBtn);
             this.tabPage2.Controls.Add(this.groupBox2);
             this.tabPage2.Location = new System.Drawing.Point(4, 29);
@@ -241,6 +325,15 @@ namespace ApplicationGUI
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Dubbing Checker";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // DC_ProgressBarLbl
+            // 
+            this.DC_ProgressBarLbl.AutoSize = true;
+            this.DC_ProgressBarLbl.Location = new System.Drawing.Point(700, 330);
+            this.DC_ProgressBarLbl.Name = "DC_ProgressBarLbl";
+            this.DC_ProgressBarLbl.Size = new System.Drawing.Size(29, 20);
+            this.DC_ProgressBarLbl.TabIndex = 26;
+            this.DC_ProgressBarLbl.Text = "0%";
             // 
             // DC_ProgressBar
             // 
@@ -414,6 +507,10 @@ namespace ApplicationGUI
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.AT_SummaryLbl);
+            this.tabPage3.Controls.Add(this.AT_InfoLabel);
+            this.tabPage3.Controls.Add(this.AT_ProgressBarLbl);
+            this.tabPage3.Controls.Add(this.AT_ProgressBar);
             this.tabPage3.Controls.Add(this.AT_ReplaceBtn);
             this.tabPage3.Controls.Add(this.AT_AnalyzeBtn);
             this.tabPage3.Controls.Add(this.AT_TranslateBtn);
@@ -424,22 +521,48 @@ namespace ApplicationGUI
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.tabPage3.Size = new System.Drawing.Size(769, 386);
             this.tabPage3.TabIndex = 2;
-            this.tabPage3.Text = "tabPage3";
+            this.tabPage3.Text = "Auto Translator";
             this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // AT_InfoLabel
+            // 
+            this.AT_InfoLabel.Location = new System.Drawing.Point(21, 240);
+            this.AT_InfoLabel.Multiline = true;
+            this.AT_InfoLabel.Name = "AT_InfoLabel";
+            this.AT_InfoLabel.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.AT_InfoLabel.Size = new System.Drawing.Size(716, 96);
+            this.AT_InfoLabel.TabIndex = 15;
+            // 
+            // AT_ProgressBarLbl
+            // 
+            this.AT_ProgressBarLbl.AutoSize = true;
+            this.AT_ProgressBarLbl.Location = new System.Drawing.Point(708, 342);
+            this.AT_ProgressBarLbl.Name = "AT_ProgressBarLbl";
+            this.AT_ProgressBarLbl.Size = new System.Drawing.Size(29, 20);
+            this.AT_ProgressBarLbl.TabIndex = 14;
+            this.AT_ProgressBarLbl.Text = "0%";
+            // 
+            // AT_ProgressBar
+            // 
+            this.AT_ProgressBar.Location = new System.Drawing.Point(21, 342);
+            this.AT_ProgressBar.Name = "AT_ProgressBar";
+            this.AT_ProgressBar.Size = new System.Drawing.Size(681, 29);
+            this.AT_ProgressBar.TabIndex = 13;
             // 
             // AT_ReplaceBtn
             // 
-            this.AT_ReplaceBtn.Location = new System.Drawing.Point(250, 249);
+            this.AT_ReplaceBtn.Location = new System.Drawing.Point(226, 202);
             this.AT_ReplaceBtn.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.AT_ReplaceBtn.Name = "AT_ReplaceBtn";
             this.AT_ReplaceBtn.Size = new System.Drawing.Size(86, 31);
             this.AT_ReplaceBtn.TabIndex = 11;
             this.AT_ReplaceBtn.Text = "Replace";
             this.AT_ReplaceBtn.UseVisualStyleBackColor = true;
+            this.AT_ReplaceBtn.Click += new System.EventHandler(this.AT_ReplaceBtn_Click);
             // 
             // AT_AnalyzeBtn
             // 
-            this.AT_AnalyzeBtn.Location = new System.Drawing.Point(250, 172);
+            this.AT_AnalyzeBtn.Location = new System.Drawing.Point(21, 202);
             this.AT_AnalyzeBtn.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.AT_AnalyzeBtn.Name = "AT_AnalyzeBtn";
             this.AT_AnalyzeBtn.Size = new System.Drawing.Size(86, 31);
@@ -450,7 +573,7 @@ namespace ApplicationGUI
             // 
             // AT_TranslateBtn
             // 
-            this.AT_TranslateBtn.Location = new System.Drawing.Point(250, 211);
+            this.AT_TranslateBtn.Location = new System.Drawing.Point(123, 202);
             this.AT_TranslateBtn.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.AT_TranslateBtn.Name = "AT_TranslateBtn";
             this.AT_TranslateBtn.Size = new System.Drawing.Size(86, 31);
@@ -459,14 +582,13 @@ namespace ApplicationGUI
             this.AT_TranslateBtn.UseVisualStyleBackColor = true;
             this.AT_TranslateBtn.Click += new System.EventHandler(this.AT_TranslateBtn_Click);
             // 
-            // DC_ProgressBarLbl
+            // AT_SummaryLbl
             // 
-            this.DC_ProgressBarLbl.AutoSize = true;
-            this.DC_ProgressBarLbl.Location = new System.Drawing.Point(700, 330);
-            this.DC_ProgressBarLbl.Name = "DC_ProgressBarLbl";
-            this.DC_ProgressBarLbl.Size = new System.Drawing.Size(29, 20);
-            this.DC_ProgressBarLbl.TabIndex = 26;
-            this.DC_ProgressBarLbl.Text = "0%";
+            this.AT_SummaryLbl.AutoSize = true;
+            this.AT_SummaryLbl.Location = new System.Drawing.Point(333, 207);
+            this.AT_SummaryLbl.Name = "AT_SummaryLbl";
+            this.AT_SummaryLbl.Size = new System.Drawing.Size(0, 20);
+            this.AT_SummaryLbl.TabIndex = 16;
             // 
             // Form1
             // 
@@ -481,11 +603,14 @@ namespace ApplicationGUI
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
             this.tabPage3.ResumeLayout(false);
+            this.tabPage3.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -502,7 +627,7 @@ namespace ApplicationGUI
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Button DC_SaveBtn;
         private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.TextBox InfoLabel;
+        private System.Windows.Forms.TextBox DC_InfoLabel;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
@@ -529,6 +654,16 @@ namespace ApplicationGUI
         private System.Windows.Forms.Button AT_ReplaceBtn;
         private System.Windows.Forms.ProgressBar DC_ProgressBar;
         private System.Windows.Forms.Label DC_ProgressBarLbl;
+        private System.Windows.Forms.Label AT_ProgressBarLbl;
+        private System.Windows.Forms.ProgressBar AT_ProgressBar;
+        private System.Windows.Forms.TextBox AT_InfoLabel;
+        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.ComboBox AT_DstLangCombo;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.ComboBox AT_SrcLangCombo;
+        private System.Windows.Forms.Label label7;
+        private Label AT_SummaryLbl;
     }
 }
 
