@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\GothicAutoTranslator\GothicAutoTranslator.csproj" />
     <ProjectReference Include="..\GothicDecibelsModulator\GothicDecibelsModulator.csproj" />
     <ProjectReference Include="..\GothicChecker\GothicChecker.csproj" />
   </ItemGroup>

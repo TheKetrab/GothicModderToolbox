@@ -10,6 +10,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using GothicAutoTranslator;
 using GothicChecker;
 
 using IniParser;
@@ -25,6 +26,11 @@ namespace ApplicationGUI
         private string _itemsLookupDirectory;
 
         private string _outputDirectory;
+
+
+        private string _translateInputPath;
+        private string _translateOutputPath;
+        private string _apiKey;
 
         private DialogParser _dialogParser;
         private ItemParser _itemParser;
@@ -65,6 +71,11 @@ namespace ApplicationGUI
             _itemsLookupDirectory = data["Paths"]["itemsLookupDirectory"];
             
             _outputDirectory = data["Paths"]["outputDirectory"];
+
+            _translateInputPath = data["Paths"]["translateInputPath"];
+            _translateOutputPath = data["Paths"]["translateOutputPath"];
+            _apiKey = data["GCP"]["ApiKey"];
+
         }
 
         private void DM_RunBtn_Click(object sender, EventArgs e)
@@ -213,6 +224,18 @@ namespace ApplicationGUI
         private void DC_ItemsLookupPathBtn_Click(object sender, EventArgs e)
         {
             FillPathTextBox(DC_ItemsLookupPath);
+        }
+
+        private void AT_TranslateBtn_Click(object sender, EventArgs e)
+        {
+            Translator t = new Translator(_translateInputPath,_translateOutputPath);
+            t.Translate(_apiKey);
+        }
+
+        private void AT_AnalyzeBtn_Click(object sender, EventArgs e)
+        {
+            Translator t = new Translator(_translateInputPath, _translateOutputPath);
+            t.Analyze();
         }
     }
 }

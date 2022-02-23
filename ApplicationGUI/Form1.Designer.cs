@@ -61,6 +61,9 @@ namespace ApplicationGUI
             this.DC_ParseItemsBtn = new System.Windows.Forms.Button();
             this.DC_ExcelBtn = new System.Windows.Forms.Button();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.AT_ReplaceBtn = new System.Windows.Forms.Button();
+            this.AT_AnalyzeBtn = new System.Windows.Forms.Button();
+            this.AT_TranslateBtn = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -398,6 +401,9 @@ namespace ApplicationGUI
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.AT_ReplaceBtn);
+            this.tabPage3.Controls.Add(this.AT_AnalyzeBtn);
+            this.tabPage3.Controls.Add(this.AT_TranslateBtn);
             this.tabPage3.Controls.Add(this.groupBox3);
             this.tabPage3.Location = new System.Drawing.Point(4, 24);
             this.tabPage3.Name = "tabPage3";
@@ -406,6 +412,35 @@ namespace ApplicationGUI
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "tabPage3";
             this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // AT_ReplaceBtn
+            // 
+            this.AT_ReplaceBtn.Location = new System.Drawing.Point(219, 187);
+            this.AT_ReplaceBtn.Name = "AT_ReplaceBtn";
+            this.AT_ReplaceBtn.Size = new System.Drawing.Size(75, 23);
+            this.AT_ReplaceBtn.TabIndex = 11;
+            this.AT_ReplaceBtn.Text = "Replace";
+            this.AT_ReplaceBtn.UseVisualStyleBackColor = true;
+            // 
+            // AT_AnalyzeBtn
+            // 
+            this.AT_AnalyzeBtn.Location = new System.Drawing.Point(219, 129);
+            this.AT_AnalyzeBtn.Name = "AT_AnalyzeBtn";
+            this.AT_AnalyzeBtn.Size = new System.Drawing.Size(75, 23);
+            this.AT_AnalyzeBtn.TabIndex = 10;
+            this.AT_AnalyzeBtn.Text = "Analyze";
+            this.AT_AnalyzeBtn.UseVisualStyleBackColor = true;
+            this.AT_AnalyzeBtn.Click += new System.EventHandler(this.AT_AnalyzeBtn_Click);
+            // 
+            // AT_TranslateBtn
+            // 
+            this.AT_TranslateBtn.Location = new System.Drawing.Point(219, 158);
+            this.AT_TranslateBtn.Name = "AT_TranslateBtn";
+            this.AT_TranslateBtn.Size = new System.Drawing.Size(75, 23);
+            this.AT_TranslateBtn.TabIndex = 9;
+            this.AT_TranslateBtn.Text = "Translate";
+            this.AT_TranslateBtn.UseVisualStyleBackColor = true;
+            this.AT_TranslateBtn.Click += new System.EventHandler(this.AT_TranslateBtn_Click);
             // 
             // Form1
             // 
@@ -464,6 +499,9 @@ namespace ApplicationGUI
         private System.Windows.Forms.Button DC_ItemsLookupPathBtn;
         private System.Windows.Forms.TextBox DC_ItemsLookupPath;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Button AT_AnalyzeBtn;
+        private System.Windows.Forms.Button AT_TranslateBtn;
+        private System.Windows.Forms.Button AT_ReplaceBtn;
     }
 }
 
