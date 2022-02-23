@@ -177,17 +177,31 @@ namespace GothicChecker
 
         }
 
-        public void Parse()
+        public void Parse(IProgress<ParserProgressModel> progress)
         {
             string[] files = Directory.GetFiles(_scriptsPath, "*.d", SearchOption.AllDirectories);
-            foreach (string file in files)
+            long total = files.Sum(x => new FileInfo(x).Length);
+            long done = 0;
+
+            Parallel.ForEach<string>(files, (file) =>
             {
-                string scriptName = new FileInfo(file).Name;
-                ParsingScriptEvt?.Invoke(this,$"Parsing script: {scriptName}");
+                FileInfo fi = new FileInfo(file);
                 ParseScript(file);
-            }
+                done += fi.Length;
+
+                ParserProgressModel progressModel = new()
+                {
+                    File = file,
+                    Msg = $"Parsed script: {fi.Name}",
+                    Percent = (int)(done * 100 / total)
+                };
+
+                progress.Report(progressModel);
+            });
 
             ParseTrialogs();
+
+            progress.Report(new ParserProgressModel("Parsed trialogs.",100));
 
             Parsed = true;
         }

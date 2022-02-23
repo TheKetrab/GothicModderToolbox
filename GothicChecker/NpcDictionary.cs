@@ -11,6 +11,7 @@ namespace GothicChecker
     public class NpcDictionary : IEnumerable<NpcModel>
     {
         private readonly Dictionary<int,NpcModel> _map; // <id,npc>
+        private object _mapLock = new object();
 
         public NpcDictionary()
         {
@@ -29,15 +30,18 @@ namespace GothicChecker
 
         public void AddLine(int id, AIOutputModel aio, string name="")
         {
-            if (_map.ContainsKey(id))
+            lock (_mapLock)
             {
-                _map[id].Dialogs.Add(aio);
-            }
-            else
-            {
-                NpcModel npc = new NpcModel(id, name);
-                _map.Add(id,npc);
-                _map[id].Dialogs.Add(aio);
+                if (_map.ContainsKey(id))
+                {
+                    _map[id].Dialogs.Add(aio);
+                }
+                else
+                {
+                    NpcModel npc = new NpcModel(id, name);
+                    _map.Add(id, npc);
+                    _map[id].Dialogs.Add(aio);
+                }
             }
         }
 

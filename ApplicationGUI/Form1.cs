@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using GothicAutoTranslator;
 using GothicChecker;
-
+using GothicChecker.Models;
 using IniParser;
 using IniParser.Model;
 
@@ -83,23 +83,55 @@ namespace ApplicationGUI
 
         }
 
-        private void DC_ParseBtn_Click(object sender, EventArgs e)
+        private void DisableButtons()
         {
-            _dialogParser = new DialogParser(_dialogsPath, _dubbingPath);
-            _dialogParser.ParsingScriptEvt += DialogParserOnParsingScriptEvt;
-            _dialogParser.Parse();
+            DC_ParseBtn.Enabled = false;
+            DC_ParseItemsBtn.Enabled = false;
+        }
 
-            DC_SaveBtn.Enabled = true;
-            DC_ExcelBtn.Enabled = true;
-
-            string text = _dialogParser.AllDialogs.Sum(x => x.Text.Length).ToString();
-            MessageBox.Show($"Total characters: {text}");
+        private void EnableButtons()
+        {
+            DC_ParseBtn.Enabled = true;
+            DC_ParseItemsBtn.Enabled = true;
 
         }
 
-        private void DialogParserOnParsingScriptEvt(object? sender, string e)
+        private async void DC_ParseBtn_Click(object sender, EventArgs e)
         {
-            InfoLabel.AppendText($"\r\n{e}");
+            try
+            {
+                DisableButtons();
+                DC_ProgressBar.Value = 0;
+                InfoLabel.Text = "Parsing scripts...";
+
+                Progress<ParserProgressModel> progress = new();
+                progress.ProgressChanged += ProgressOnProgressChanged;
+
+                _dialogParser = new DialogParser(_dialogsPath, _dubbingPath);
+                await Task.Run(() => _dialogParser.Parse(progress));
+
+                DC_SaveBtn.Enabled = true;
+                DC_ExcelBtn.Enabled = true;
+
+                ProgressOnProgressChanged(this,
+                    new ParserProgressModel("Parsing dialogs completed.", 100));
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show("Error occured during parsing. Try again.");
+            }
+            finally
+            {
+                EnableButtons();
+            }
+
+        }
+
+        private void ProgressOnProgressChanged(object? sender, ParserProgressModel e)
+        {
+            DC_ProgressBar.Value = e.Percent;
+            DC_ProgressBarLbl.Text = $"{e.Percent}%";
+            InfoLabel.AppendText($"{Environment.NewLine}{e.Msg}");
         }
 
         private void DC_SaveBtn_Click(object sender, EventArgs e)
@@ -158,16 +190,34 @@ namespace ApplicationGUI
 
         }
 
-        private void DC_ParseItemsBtn_Click(object sender, EventArgs e)
+        private async void DC_ParseItemsBtn_Click(object sender, EventArgs e)
         {
-            _itemParser = new ItemParser(_itemsDirectory, _itemsLookupDirectory);
-            _itemParser.ParsingScriptEvt += DialogParserOnParsingScriptEvt;
-            _itemParser.Parse();
+            try
+            {
+                DisableButtons();
+                DC_ProgressBar.Value = 0;
+                InfoLabel.Text = "Parsing items...";
 
-            DC_SaveBtn.Enabled = true;
-            DC_ExcelBtn.Enabled = true;
+                Progress<ParserProgressModel> progress = new();
+                progress.ProgressChanged += ProgressOnProgressChanged;
 
-            MessageBox.Show("Finished");
+                _itemParser = new ItemParser(_itemsDirectory, _itemsLookupDirectory);
+                await Task.Run(() => _itemParser.Parse(progress));
+
+                DC_SaveBtn.Enabled = true;
+                DC_ExcelBtn.Enabled = true;
+
+                ProgressOnProgressChanged(this,
+                    new ParserProgressModel("Parsing items completed.", 100));
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show("Error occured during parsing. Try again.");
+            }
+            finally
+            {
+                EnableButtons();
+            }
         }
 
         private void TextBoxPathsFromObject()

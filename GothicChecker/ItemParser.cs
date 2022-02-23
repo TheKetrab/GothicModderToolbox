@@ -6,6 +6,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using GothicChecker;
+using GothicChecker.Models;
 
 namespace GothicChecker
 {
@@ -165,25 +166,56 @@ namespace GothicChecker
         }
 
 
-        public void Parse()
+        public void Parse(IProgress<ParserProgressModel> progress)
         {
-            ParsingScriptEvt?.Invoke(this, $"Found {customItems.Count} items.");
+            const int initPercent = 5;
+            const int zensPercent = 20;
+            const int scriptsPercent = 100 - initPercent - zensPercent;
+
+
+            progress.Report(new ParserProgressModel(
+                $"Found { customItems.Count } items.",initPercent));
 
             string[] scripts = Directory.GetFiles(_lookupDirectory, "*.d", SearchOption.AllDirectories);
-            foreach (string script in scripts)
-            {
-                string scriptName = new FileInfo(script).Name;
-                ParsingScriptEvt?.Invoke(this, $"Parsing script: {scriptName}");
-                ParseScript(script);
-            }
-
             string[] zens = Directory.GetFiles(_lookupDirectory, "*.ZEN", SearchOption.AllDirectories);
-            foreach (string zen in zens)
+
+            long total = scripts.Sum(x => new FileInfo(x).Length);
+            long done = 0;
+
+            long totalZens = scripts.Sum(x => new FileInfo(x).Length);
+            long doneZens = 0;
+
+            Parallel.ForEach<string>(scripts, (script) =>
             {
-                string scriptName = new FileInfo(zen).Name;
-                ParsingScriptEvt?.Invoke(this, $"Parsing ZEN: {scriptName}");
+                FileInfo fi = new FileInfo(script);
+                ParseScript(script);
+                done += fi.Length;
+
+                ParserProgressModel progressModel = new()
+                {
+                    File = script,
+                    Msg = $"Parsed script: {fi.Name}",
+                    Percent = initPercent + (int)(done * scriptsPercent / total)
+                };
+
+                progress.Report(progressModel);
+            });
+
+            Parallel.ForEach<string>(zens, (zen) =>
+            {
+                FileInfo fi = new FileInfo(zen);
                 ParseZEN(zen);
-            }
+                doneZens += fi.Length;
+
+                ParserProgressModel progressModel = new()
+                {
+                    File = zen,
+                    Msg = $"Parsed ZEN: {fi.Name}",
+                    Percent = initPercent + zensPercent + (int)(doneZens * zensPercent / totalZens)
+                };
+
+                progress.Report(progressModel);
+            });
 
             Parsed = true;
         }
