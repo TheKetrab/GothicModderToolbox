@@ -10,6 +10,7 @@ namespace GothicChecker
     {
         public static string OutputOther = @"AI_Output\s*\(\s*(other|hero)\s*,\s*self\s*,\s*""(.+)""\s*\)\s*;\s*//(.*)";
         public static string OutputSelf = @"AI_Output\s*\(\s*self\s*,\s*(other|hero)\s*,\s*""(.+)""\s*\)\s*;\s*//(.*)";
+        public static string OutputAtypical = @"AI_Output\s*\(.*,.*,\s*""(.+)""\s*\)\s*;\s*//(.*)"; // eg. monologs
         public static string TrialogStart = @"TRIA_Start\(\);";
         public static string TrialogFinish = @"TRIA_Finish\(\);";
         public static string TrialogNext = @"TRIA_Next\(\s*(.*)\s*\);";

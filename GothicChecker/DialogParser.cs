@@ -113,11 +113,27 @@ namespace GothicChecker
             AllDialogs.Add(aio);
         }
 
+        private void ParseAtypicalLine(string line, string filename)
+        {
+            Match match = Regex.Match(line, GothicPatterns.OutputAtypical, RegexOpt);
+
+            string instance = match.Groups[1].Value;
+            string text = match.Groups[2].Value;
+
+            AIOutputModel aio = new AIOutputModel(instance, "unknown", text, filename);
+            Npcs.AddLine(-1, aio);
+
+            if (!WavNames.Contains($"{instance.ToUpper()}.WAV"))
+                Npcs[-1].Missing.Add(aio);
+
+            AllDialogs.Add(aio);
+        }
+
         private void ParseScript(string file)
         {
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 
-            StreamReader sr = new StreamReader(file, Encoding.GetEncoding(1250));
+            using StreamReader sr = new StreamReader(file, Encoding.GetEncoding(1250));
             bool trialogMode = false;
             string trialogFakeName = "";
 
@@ -144,6 +160,11 @@ namespace GothicChecker
                     {
                         ParseNpcLine(line, file);
                     }
+                }
+
+                else if (Regex.IsMatch(line, GothicPatterns.OutputAtypical, RegexOpt))
+                {
+                    ParseAtypicalLine(line, file);
                 }
 
                 else if (Regex.IsMatch(line, GothicPatterns.TrialogStart, RegexOpt))

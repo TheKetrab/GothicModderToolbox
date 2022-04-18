@@ -35,7 +35,7 @@ namespace GothicChecker
         private List<string> GetItemInstances(string file)
         {
             List<string> result = new();
-            StreamReader sr = new StreamReader(file, Encoding.Default);
+            using StreamReader sr = new StreamReader(file, Encoding.Default);
             ParsingScriptEvt?.Invoke(this, file);
 
             string line;
@@ -127,7 +127,7 @@ namespace GothicChecker
 
         private void ParseZEN(string zenFile)
         {
-            StreamReader sr = new StreamReader(zenFile, Encoding.Default);
+            using StreamReader sr = new StreamReader(zenFile, Encoding.Default);
 
             string line;
             while ((line = sr.ReadLine()) != null)
@@ -146,7 +146,7 @@ namespace GothicChecker
         }
         private void ParseScript(string scriptFile)
         {
-            StreamReader sr = new StreamReader(scriptFile, Encoding.Default);
+            using StreamReader sr = new StreamReader(scriptFile, Encoding.Default);
             string str = sr.ReadToEnd();
 
             foreach (var itemInstance in customItems)
