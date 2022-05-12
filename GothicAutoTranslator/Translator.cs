@@ -16,6 +16,15 @@ using Newtonsoft.Json.Converters;
 
 namespace GothicAutoTranslator
 {
+
+    public struct EntryData
+    {
+        public string File;
+        public int Line;
+        public string Text;
+        public string Kind;
+    }
+
     public class Translator
     {
         private string _inputPath;
@@ -27,12 +36,25 @@ namespace GothicAutoTranslator
 
         public event EventHandler<string> InfoEvt;
 
+        public List<EntryData> GetEntries()
+        {
+            return _entries.ConvertAll(
+                itd => new EntryData()
+                {
+                    File = itd.File,
+                    Line = itd.Line,
+                    Text = itd.Text,
+                    Kind = itd.Kind
+                });
+        }
+
         private struct ItemData
         {
             public int Id;
             public string File;
             public int Line;
             public string Text;
+            public string Kind;
             public string TranslatedText;
         }
 
@@ -50,23 +72,26 @@ namespace GothicAutoTranslator
 
         private void AnalyzeSingleFile(string file, ref int total)
         {
-            StreamReader sr = new StreamReader(file, Encoding.GetEncoding(_inputEncoding));
+            using StreamReader sr = new StreamReader(file, Encoding.GetEncoding(_inputEncoding));
 
             string line;
-            int lineNum = 0;
+            int lineNum = -1;
             while ((line = sr.ReadLine()) != null)
             {
+                lineNum++;
                 var m = GothicPatterns.MatchAny(line);
                 if (!m.HasValue) continue;
 
                 string text = m.Value.Match.Groups[m.Value.GroupWithText].Value;
+                string kind = m.Value.PatternName;
 
                 _entries.Add(new ItemData()
                 {
                     File = file,
                     Id = ++total,
-                    Line = ++lineNum,
-                    Text = text
+                    Line = lineNum,
+                    Text = text,
+                    Kind = kind,
                 });
             }
 
@@ -75,10 +100,6 @@ namespace GothicAutoTranslator
         public async Task AnalyzeAsync(IProgress<TranslationProgressModel> progress = null)
         {
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
-
-
-            // TODO: read it asynchronously
-
             string[] files = Directory.GetFiles(_inputPath, "*.d", SearchOption.AllDirectories);
             int total = 0;
 
@@ -94,15 +115,15 @@ namespace GothicAutoTranslator
                 progress?.Report(new TranslationProgressModel()
                 {
                     Msg = $"Parsed file {fi.Name}",
-                    Percent = (int) (dataRead * 100 / totalToRead)
+                    Percent = (int)(dataRead * 100 / totalToRead)
                 });
             }
 
-            InfoEvt?.Invoke(this,$"All characters: {_entries.Sum(x => x.Text.Length)}");
+            InfoEvt?.Invoke(this, $"All characters: {_entries.Sum(x => x.Text.Length)}");
 
         }
 
-        public async Task TranslateAsync(string apiKey)
+        public async Task TranslateAsync(string apiKey, IProgress<TranslationProgressModel> progress = null)
         {
             var converter = new ExpandoObjectConverter();
             for (int i=0; i< _entries.Count; i++)
@@ -130,6 +151,12 @@ namespace GothicAutoTranslator
                     entry.TranslatedText = translatedText;
 
                     _entries[i] = entry;
+
+                    progress?.Report(new TranslationProgressModel()
+                    {
+                        Percent = (int)(i * 100 / _entries.Count)
+                    });
+
                 }
                 catch (Exception e)
                 {
@@ -138,13 +165,40 @@ namespace GothicAutoTranslator
 
             }
 
+        }
+
+        private void ReplaceSingleFile(IGrouping<string,ItemData> group)
+        {
+            string filename = group.Key;
+            string[] lines = File.ReadAllLines(filename,Encoding.GetEncoding(_inputEncoding));
+
+            foreach (var item in group)
+            {
+                lines[item.Line] = lines[item.Line].Replace(item.Text, item.TranslatedText);
+            }
+
+            File.WriteAllLines(filename,lines,Encoding.GetEncoding(_inputEncoding));
             
         }
 
-        public async Task ReplaceAsync()
+        public async Task ReplaceAsync(IProgress<TranslationProgressModel> progress = null)
         {
-            // foreach file if match then replace using the same 'i'
+            var groups = _entries.GroupBy(x => x.File);
+            int total = _entries.Count();
+            int done = 0;
+            foreach (var group in groups)
+            {
+                await Task.Run(() => ReplaceSingleFile(group));
+                done += group.Count();
+
+                progress?.Report(new TranslationProgressModel()
+                {
+                    Msg = $"Translated file {group.Key}",
+                    Percent = (int)(done * 100 / total)
+                });
+            }
         }
+
 
     }
 }

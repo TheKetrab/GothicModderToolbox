@@ -71,13 +71,14 @@ namespace ApplicationGUI
             this.DC_ParseItemsBtn = new System.Windows.Forms.Button();
             this.DC_ExcelBtn = new System.Windows.Forms.Button();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.AT_SummaryLbl = new System.Windows.Forms.Label();
             this.AT_InfoLabel = new System.Windows.Forms.TextBox();
             this.AT_ProgressBarLbl = new System.Windows.Forms.Label();
             this.AT_ProgressBar = new System.Windows.Forms.ProgressBar();
             this.AT_ReplaceBtn = new System.Windows.Forms.Button();
             this.AT_AnalyzeBtn = new System.Windows.Forms.Button();
             this.AT_TranslateBtn = new System.Windows.Forms.Button();
-            this.AT_SummaryLbl = new System.Windows.Forms.Label();
+            this.AT_SpellcheckerBtn = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -99,9 +100,9 @@ namespace ApplicationGUI
             // 
             // DC_ParseBtn
             // 
-            this.DC_ParseBtn.Location = new System.Drawing.Point(19, 147);
+            this.DC_ParseBtn.Location = new System.Drawing.Point(19, 125);
             this.DC_ParseBtn.Name = "DC_ParseBtn";
-            this.DC_ParseBtn.Size = new System.Drawing.Size(105, 29);
+            this.DC_ParseBtn.Size = new System.Drawing.Size(137, 29);
             this.DC_ParseBtn.TabIndex = 1;
             this.DC_ParseBtn.Text = "Parse Dialogs";
             this.DC_ParseBtn.UseVisualStyleBackColor = true;
@@ -129,7 +130,7 @@ namespace ApplicationGUI
             // 
             // DC_InfoLabel
             // 
-            this.DC_InfoLabel.Location = new System.Drawing.Point(6, 227);
+            this.DC_InfoLabel.Location = new System.Drawing.Point(6, 242);
             this.DC_InfoLabel.Multiline = true;
             this.DC_InfoLabel.Name = "DC_InfoLabel";
             this.DC_InfoLabel.ReadOnly = true;
@@ -172,7 +173,7 @@ namespace ApplicationGUI
             this.groupBox2.Controls.Add(this.DC_PrintMissing);
             this.groupBox2.Location = new System.Drawing.Point(19, 29);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(229, 87);
+            this.groupBox2.Size = new System.Drawing.Size(263, 87);
             this.groupBox2.TabIndex = 7;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Print options";
@@ -180,9 +181,9 @@ namespace ApplicationGUI
             // DC_SaveBtn
             // 
             this.DC_SaveBtn.Enabled = false;
-            this.DC_SaveBtn.Location = new System.Drawing.Point(131, 191);
+            this.DC_SaveBtn.Location = new System.Drawing.Point(162, 163);
             this.DC_SaveBtn.Name = "DC_SaveBtn";
-            this.DC_SaveBtn.Size = new System.Drawing.Size(94, 29);
+            this.DC_SaveBtn.Size = new System.Drawing.Size(120, 29);
             this.DC_SaveBtn.TabIndex = 2;
             this.DC_SaveBtn.Text = "Save to files";
             this.DC_SaveBtn.UseVisualStyleBackColor = true;
@@ -329,7 +330,7 @@ namespace ApplicationGUI
             // DC_ProgressBarLbl
             // 
             this.DC_ProgressBarLbl.AutoSize = true;
-            this.DC_ProgressBarLbl.Location = new System.Drawing.Point(700, 330);
+            this.DC_ProgressBarLbl.Location = new System.Drawing.Point(700, 347);
             this.DC_ProgressBarLbl.Name = "DC_ProgressBarLbl";
             this.DC_ProgressBarLbl.Size = new System.Drawing.Size(29, 20);
             this.DC_ProgressBarLbl.TabIndex = 26;
@@ -337,7 +338,7 @@ namespace ApplicationGUI
             // 
             // DC_ProgressBar
             // 
-            this.DC_ProgressBar.Location = new System.Drawing.Point(6, 330);
+            this.DC_ProgressBar.Location = new System.Drawing.Point(6, 347);
             this.DC_ProgressBar.Name = "DC_ProgressBar";
             this.DC_ProgressBar.Size = new System.Drawing.Size(688, 29);
             this.DC_ProgressBar.TabIndex = 25;
@@ -355,16 +356,16 @@ namespace ApplicationGUI
             // 
             // DC_ItemsLookupPath
             // 
-            this.DC_ItemsLookupPath.Location = new System.Drawing.Point(393, 184);
+            this.DC_ItemsLookupPath.Location = new System.Drawing.Point(411, 184);
             this.DC_ItemsLookupPath.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.DC_ItemsLookupPath.Name = "DC_ItemsLookupPath";
-            this.DC_ItemsLookupPath.Size = new System.Drawing.Size(321, 27);
+            this.DC_ItemsLookupPath.Size = new System.Drawing.Size(303, 27);
             this.DC_ItemsLookupPath.TabIndex = 23;
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(282, 189);
+            this.label6.Location = new System.Drawing.Point(299, 189);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(98, 20);
             this.label6.TabIndex = 22;
@@ -383,16 +384,16 @@ namespace ApplicationGUI
             // 
             // DC_ItemsPath
             // 
-            this.DC_ItemsPath.Location = new System.Drawing.Point(393, 145);
+            this.DC_ItemsPath.Location = new System.Drawing.Point(411, 145);
             this.DC_ItemsPath.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.DC_ItemsPath.Name = "DC_ItemsPath";
-            this.DC_ItemsPath.Size = new System.Drawing.Size(321, 27);
+            this.DC_ItemsPath.Size = new System.Drawing.Size(303, 27);
             this.DC_ItemsPath.TabIndex = 20;
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(282, 151);
+            this.label5.Location = new System.Drawing.Point(299, 151);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(82, 20);
             this.label5.TabIndex = 19;
@@ -411,16 +412,16 @@ namespace ApplicationGUI
             // 
             // DC_DubbingPath
             // 
-            this.DC_DubbingPath.Location = new System.Drawing.Point(393, 107);
+            this.DC_DubbingPath.Location = new System.Drawing.Point(411, 107);
             this.DC_DubbingPath.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.DC_DubbingPath.Name = "DC_DubbingPath";
-            this.DC_DubbingPath.Size = new System.Drawing.Size(321, 27);
+            this.DC_DubbingPath.Size = new System.Drawing.Size(303, 27);
             this.DC_DubbingPath.TabIndex = 17;
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(282, 112);
+            this.label4.Location = new System.Drawing.Point(299, 112);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(104, 20);
             this.label4.TabIndex = 16;
@@ -439,16 +440,16 @@ namespace ApplicationGUI
             // 
             // DC_DialogsPath
             // 
-            this.DC_DialogsPath.Location = new System.Drawing.Point(393, 68);
+            this.DC_DialogsPath.Location = new System.Drawing.Point(411, 68);
             this.DC_DialogsPath.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.DC_DialogsPath.Name = "DC_DialogsPath";
-            this.DC_DialogsPath.Size = new System.Drawing.Size(321, 27);
+            this.DC_DialogsPath.Size = new System.Drawing.Size(303, 27);
             this.DC_DialogsPath.TabIndex = 14;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(282, 73);
+            this.label3.Location = new System.Drawing.Point(299, 73);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(97, 20);
             this.label3.TabIndex = 13;
@@ -467,16 +468,16 @@ namespace ApplicationGUI
             // 
             // DC_OutputPath
             // 
-            this.DC_OutputPath.Location = new System.Drawing.Point(393, 29);
+            this.DC_OutputPath.Location = new System.Drawing.Point(411, 29);
             this.DC_OutputPath.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.DC_OutputPath.Name = "DC_OutputPath";
-            this.DC_OutputPath.Size = new System.Drawing.Size(321, 27);
+            this.DC_OutputPath.Size = new System.Drawing.Size(303, 27);
             this.DC_OutputPath.TabIndex = 11;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(282, 35);
+            this.label2.Location = new System.Drawing.Point(299, 35);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(55, 20);
             this.label2.TabIndex = 10;
@@ -484,10 +485,10 @@ namespace ApplicationGUI
             // 
             // DC_ParseItemsBtn
             // 
-            this.DC_ParseItemsBtn.Location = new System.Drawing.Point(131, 145);
+            this.DC_ParseItemsBtn.Location = new System.Drawing.Point(162, 124);
             this.DC_ParseItemsBtn.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.DC_ParseItemsBtn.Name = "DC_ParseItemsBtn";
-            this.DC_ParseItemsBtn.Size = new System.Drawing.Size(86, 31);
+            this.DC_ParseItemsBtn.Size = new System.Drawing.Size(120, 31);
             this.DC_ParseItemsBtn.TabIndex = 9;
             this.DC_ParseItemsBtn.Text = "Parse Items";
             this.DC_ParseItemsBtn.UseVisualStyleBackColor = true;
@@ -496,10 +497,10 @@ namespace ApplicationGUI
             // DC_ExcelBtn
             // 
             this.DC_ExcelBtn.Enabled = false;
-            this.DC_ExcelBtn.Location = new System.Drawing.Point(23, 189);
+            this.DC_ExcelBtn.Location = new System.Drawing.Point(19, 162);
             this.DC_ExcelBtn.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.DC_ExcelBtn.Name = "DC_ExcelBtn";
-            this.DC_ExcelBtn.Size = new System.Drawing.Size(94, 31);
+            this.DC_ExcelBtn.Size = new System.Drawing.Size(137, 31);
             this.DC_ExcelBtn.TabIndex = 8;
             this.DC_ExcelBtn.Text = "Make Excel";
             this.DC_ExcelBtn.UseVisualStyleBackColor = true;
@@ -507,6 +508,7 @@ namespace ApplicationGUI
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.AT_SpellcheckerBtn);
             this.tabPage3.Controls.Add(this.AT_SummaryLbl);
             this.tabPage3.Controls.Add(this.AT_InfoLabel);
             this.tabPage3.Controls.Add(this.AT_ProgressBarLbl);
@@ -523,6 +525,14 @@ namespace ApplicationGUI
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Auto Translator";
             this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // AT_SummaryLbl
+            // 
+            this.AT_SummaryLbl.AutoSize = true;
+            this.AT_SummaryLbl.Location = new System.Drawing.Point(333, 207);
+            this.AT_SummaryLbl.Name = "AT_SummaryLbl";
+            this.AT_SummaryLbl.Size = new System.Drawing.Size(0, 20);
+            this.AT_SummaryLbl.TabIndex = 16;
             // 
             // AT_InfoLabel
             // 
@@ -554,7 +564,7 @@ namespace ApplicationGUI
             this.AT_ReplaceBtn.Location = new System.Drawing.Point(226, 202);
             this.AT_ReplaceBtn.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.AT_ReplaceBtn.Name = "AT_ReplaceBtn";
-            this.AT_ReplaceBtn.Size = new System.Drawing.Size(86, 31);
+            this.AT_ReplaceBtn.Size = new System.Drawing.Size(101, 31);
             this.AT_ReplaceBtn.TabIndex = 11;
             this.AT_ReplaceBtn.Text = "Replace";
             this.AT_ReplaceBtn.UseVisualStyleBackColor = true;
@@ -565,7 +575,7 @@ namespace ApplicationGUI
             this.AT_AnalyzeBtn.Location = new System.Drawing.Point(21, 202);
             this.AT_AnalyzeBtn.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.AT_AnalyzeBtn.Name = "AT_AnalyzeBtn";
-            this.AT_AnalyzeBtn.Size = new System.Drawing.Size(86, 31);
+            this.AT_AnalyzeBtn.Size = new System.Drawing.Size(96, 31);
             this.AT_AnalyzeBtn.TabIndex = 10;
             this.AT_AnalyzeBtn.Text = "Analyze";
             this.AT_AnalyzeBtn.UseVisualStyleBackColor = true;
@@ -576,19 +586,21 @@ namespace ApplicationGUI
             this.AT_TranslateBtn.Location = new System.Drawing.Point(123, 202);
             this.AT_TranslateBtn.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.AT_TranslateBtn.Name = "AT_TranslateBtn";
-            this.AT_TranslateBtn.Size = new System.Drawing.Size(86, 31);
+            this.AT_TranslateBtn.Size = new System.Drawing.Size(97, 31);
             this.AT_TranslateBtn.TabIndex = 9;
             this.AT_TranslateBtn.Text = "Translate";
             this.AT_TranslateBtn.UseVisualStyleBackColor = true;
             this.AT_TranslateBtn.Click += new System.EventHandler(this.AT_TranslateBtn_Click);
             // 
-            // AT_SummaryLbl
+            // AT_SpellcheckerBtn
             // 
-            this.AT_SummaryLbl.AutoSize = true;
-            this.AT_SummaryLbl.Location = new System.Drawing.Point(333, 207);
-            this.AT_SummaryLbl.Name = "AT_SummaryLbl";
-            this.AT_SummaryLbl.Size = new System.Drawing.Size(0, 20);
-            this.AT_SummaryLbl.TabIndex = 16;
+            this.AT_SpellcheckerBtn.Location = new System.Drawing.Point(339, 202);
+            this.AT_SpellcheckerBtn.Name = "AT_SpellcheckerBtn";
+            this.AT_SpellcheckerBtn.Size = new System.Drawing.Size(100, 29);
+            this.AT_SpellcheckerBtn.TabIndex = 17;
+            this.AT_SpellcheckerBtn.Text = "Spellcheck";
+            this.AT_SpellcheckerBtn.UseVisualStyleBackColor = true;
+            this.AT_SpellcheckerBtn.Click += new System.EventHandler(this.AT_SpellcheckerBtn_Click);
             // 
             // Form1
             // 
@@ -664,6 +676,7 @@ namespace ApplicationGUI
         private System.Windows.Forms.ComboBox AT_SrcLangCombo;
         private System.Windows.Forms.Label label7;
         private Label AT_SummaryLbl;
+        private Button AT_SpellcheckerBtn;
     }
 }
 

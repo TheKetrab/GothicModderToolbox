@@ -294,10 +294,12 @@ namespace ApplicationGUI
                 return;
             }
 
-            if (MessageBox.Show("Are you sure?", "", MessageBoxButtons.YesNo) != DialogResult.OK)
+            if (MessageBox.Show("Are you sure?", "", MessageBoxButtons.YesNo) != DialogResult.Yes)
                 return;
 
-            await _translator.TranslateAsync(_apiKey);
+            Progress<TranslationProgressModel> progress = new();
+            progress.ProgressChanged += ProgressOnProgressChanged;
+            await _translator.TranslateAsync(_apiKey,progress);
         }
 
         private async void AT_AnalyzeBtn_Click(object sender, EventArgs e)
@@ -319,7 +321,7 @@ namespace ApplicationGUI
             }
             catch (Exception exc)
             {
-                MessageBox.Show("Error");
+                MessageBox.Show($"Error: {exc.Message}");
             }
             finally
             {
@@ -349,9 +351,77 @@ namespace ApplicationGUI
             AT_InfoLabel.AppendText($"{Environment.NewLine}{e.Msg}");
         }
 
-        private void AT_ReplaceBtn_Click(object sender, EventArgs e)
+        private async void AT_ReplaceBtn_Click(object sender, EventArgs e)
         {
+            try
+            {
+                DisableATButtons();
+                AT_ProgressBar.Value = 0;
+                AT_InfoLabel.Text = "Replacing scripts...";
 
+                Progress<TranslationProgressModel> progress = new();
+                progress.ProgressChanged += ProgressOnProgressChanged;
+
+                await _translator.ReplaceAsync(progress);
+
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show("Error");
+            }
+            finally
+            {
+                EnableATButtons();
+            }
+        }
+
+        private void AT_SpellcheckerBtn_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                DisableATButtons();
+                AT_ProgressBar.Value = 0;
+                AT_InfoLabel.Text = "Spellchecking...";
+
+                Progress<TranslationProgressModel> progress = new();
+                progress.ProgressChanged += ProgressOnProgressChanged;
+
+                Spellchecker spellchecker = new Spellchecker(@"C:\Users\ketra\Desktop\jezykpl");
+                spellchecker.SpellcheckerEvt += (o, model) =>
+                {
+                    switch (model.Reason)
+                    {
+                        case SpellcheckerEvtReason.Typo:
+                            AT_InfoLabel.AppendText($"{Environment.NewLine}Typo: {model.Args[0]}");
+                            //for (int i = 1; i < model.Args.Length; i++)
+                            //    AT_InfoLabel.AppendText($" {model.Args[i]}");
+                            break;
+                        case SpellcheckerEvtReason.StartsWithLowerCase:
+                            AT_InfoLabel.AppendText($"{Environment.NewLine}LowerCase: {model.Args[0]}");
+                            break;
+                        case SpellcheckerEvtReason.EndsWithoutDot:
+                            AT_InfoLabel.AppendText($"{Environment.NewLine}EndsWithDot: {model.Args[0]}");
+                            break;
+                        default:
+                            AT_InfoLabel.AppendText($"{Environment.NewLine}...: {model.Args[0]}");
+                            break;
+                    }
+                };
+
+                var entries = _translator.GetEntries();
+                spellchecker.AnalyzeTypos(entries);
+                AT_InfoLabel.AppendText($"{Environment.NewLine}--- DONE ---");
+                //spellchecker.AnalyzeCapitalsAndDots(entries,SpellcheckerFilters.ForUppercaseAndDot);
+
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show("Error");
+            }
+            finally
+            {
+                EnableATButtons();
+            }
         }
     }
 }
