@@ -10,21 +10,25 @@ namespace ApplicationGUI
 {
     public class SettingsManager
     {
+        #region DubbingChecker
         public string DC_DialogsPath { get; set; }
         public string DC_DubbingPath { get; set; }
         public string DC_ItemsDirectory { get; set; }
         public string DC_ItemsLookupDirectory { get; set; }
         public string DC_OutputDirectory { get; set; }
+        #endregion
 
 
+        #region AutoTranslator
         public string AT_TranslateInputPath { get; set; }
         public string AT_TranslateOutputPath { get; set; }
         public string AT_ApiKey { get; set; }
 
-        private int _encoding;
+        public int AT_Encoding { get; set; }
 
-        public int AT_MaxCharacters { get; set; } = 300000;
-        public string AT_SpellcheckerDictionaryDir { get; set; } = @"C:\Users\ketra\Desktop\jezykpl"; // TODO config
+        public int AT_MaxCharacters { get; set; }
+        public string AT_SpellcheckerDictionaryDir { get; set; }
+        #endregion
 
 
         public void UpdateConfigFile()
@@ -49,7 +53,11 @@ namespace ApplicationGUI
             AT_TranslateOutputPath = data["Paths"]["AT_translateOutputPath"];
             AT_ApiKey = data["GCP"]["ApiKey"];
 
-            _encoding = int.Parse(data["Encoding"]["InputScripts"]); // TODO: default if not set + message
+            AT_Encoding = int.Parse(data["Encoding"]["InputScripts"]); // TODO: default if not set + message
+            AT_MaxCharacters = int.Parse(data["Translation"]["MaxTranslationCharacters"]);
+
+            AT_SpellcheckerDictionaryDir = data["Paths"]["AT_spellcheckerDictionaryDir"];
+
         }
 
 

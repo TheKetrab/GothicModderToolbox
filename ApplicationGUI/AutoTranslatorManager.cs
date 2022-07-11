@@ -16,7 +16,7 @@ namespace ApplicationGUI
             translator = new Translator(
                 SettingsManager.Instance.AT_TranslateInputPath,
                 SettingsManager.Instance.AT_TranslateOutputPath,
-                1250); // TODO encoding
+                SettingsManager.Instance.AT_Encoding);
 
             await translator.AnalyzeAsync(progress);
 
@@ -24,7 +24,8 @@ namespace ApplicationGUI
 
         public string GetSummary()
         {
-            return $"{translator.TotalCharacters} characters";
+            return $"Total characters: {translator.TotalCharacters}{Environment.NewLine}" +
+                   $"Total entries: {translator.TotalLines}";
         }
 
         public async Task Translate(IProgress<TranslationProgressModel> progress)

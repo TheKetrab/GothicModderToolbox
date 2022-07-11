@@ -68,6 +68,7 @@ namespace GothicAutoTranslator
         }
 
         public long TotalCharacters => _entries?.Sum(x => x.Text.Length) ?? 0;
+        public long TotalLines => _entries?.Count ?? 0;
 
 
         private void AnalyzeSingleFile(string file, ref int total)
