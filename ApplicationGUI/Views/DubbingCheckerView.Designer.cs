@@ -43,10 +43,9 @@ namespace ApplicationGUI
             // 
             // DC_ParseItemsBtn
             // 
-            this.DC_ParseItemsBtn.Location = new System.Drawing.Point(281, 50);
-            this.DC_ParseItemsBtn.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.DC_ParseItemsBtn.Location = new System.Drawing.Point(246, 38);
             this.DC_ParseItemsBtn.Name = "DC_ParseItemsBtn";
-            this.DC_ParseItemsBtn.Size = new System.Drawing.Size(137, 31);
+            this.DC_ParseItemsBtn.Size = new System.Drawing.Size(120, 23);
             this.DC_ParseItemsBtn.TabIndex = 33;
             this.DC_ParseItemsBtn.Text = "Parse Items";
             this.DC_ParseItemsBtn.UseVisualStyleBackColor = true;
@@ -55,10 +54,9 @@ namespace ApplicationGUI
             // DC_ExcelBtn
             // 
             this.DC_ExcelBtn.Enabled = false;
-            this.DC_ExcelBtn.Location = new System.Drawing.Point(424, 14);
-            this.DC_ExcelBtn.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.DC_ExcelBtn.Location = new System.Drawing.Point(371, 10);
             this.DC_ExcelBtn.Name = "DC_ExcelBtn";
-            this.DC_ExcelBtn.Size = new System.Drawing.Size(137, 31);
+            this.DC_ExcelBtn.Size = new System.Drawing.Size(120, 23);
             this.DC_ExcelBtn.TabIndex = 32;
             this.DC_ExcelBtn.Text = "Make Excel";
             this.DC_ExcelBtn.UseVisualStyleBackColor = true;
@@ -67,9 +65,10 @@ namespace ApplicationGUI
             // DC_SaveBtn
             // 
             this.DC_SaveBtn.Enabled = false;
-            this.DC_SaveBtn.Location = new System.Drawing.Point(424, 52);
+            this.DC_SaveBtn.Location = new System.Drawing.Point(371, 39);
+            this.DC_SaveBtn.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.DC_SaveBtn.Name = "DC_SaveBtn";
-            this.DC_SaveBtn.Size = new System.Drawing.Size(137, 29);
+            this.DC_SaveBtn.Size = new System.Drawing.Size(120, 22);
             this.DC_SaveBtn.TabIndex = 30;
             this.DC_SaveBtn.Text = "Save to files";
             this.DC_SaveBtn.UseVisualStyleBackColor = true;
@@ -77,19 +76,23 @@ namespace ApplicationGUI
             // 
             // DC_InfoLabel
             // 
-            this.DC_InfoLabel.Location = new System.Drawing.Point(3, 96);
+            this.DC_InfoLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.DC_InfoLabel.Location = new System.Drawing.Point(3, 72);
             this.DC_InfoLabel.Multiline = true;
             this.DC_InfoLabel.Name = "DC_InfoLabel";
             this.DC_InfoLabel.ReadOnly = true;
             this.DC_InfoLabel.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.DC_InfoLabel.Size = new System.Drawing.Size(566, 102);
+            this.DC_InfoLabel.Size = new System.Drawing.Size(494, 78);
             this.DC_InfoLabel.TabIndex = 28;
             // 
             // DC_ParseBtn
             // 
-            this.DC_ParseBtn.Location = new System.Drawing.Point(281, 14);
+            this.DC_ParseBtn.Location = new System.Drawing.Point(246, 10);
+            this.DC_ParseBtn.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.DC_ParseBtn.Name = "DC_ParseBtn";
-            this.DC_ParseBtn.Size = new System.Drawing.Size(137, 29);
+            this.DC_ParseBtn.Size = new System.Drawing.Size(120, 22);
             this.DC_ParseBtn.TabIndex = 29;
             this.DC_ParseBtn.Text = "Parse Dialogs";
             this.DC_ParseBtn.UseVisualStyleBackColor = true;
@@ -99,9 +102,11 @@ namespace ApplicationGUI
             // 
             this.DC_OptionsGroupbox.Controls.Add(this.DC_HideCompleted);
             this.DC_OptionsGroupbox.Controls.Add(this.DC_PrintMissing);
-            this.DC_OptionsGroupbox.Location = new System.Drawing.Point(3, 3);
+            this.DC_OptionsGroupbox.Location = new System.Drawing.Point(3, 2);
+            this.DC_OptionsGroupbox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.DC_OptionsGroupbox.Name = "DC_OptionsGroupbox";
-            this.DC_OptionsGroupbox.Size = new System.Drawing.Size(263, 87);
+            this.DC_OptionsGroupbox.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.DC_OptionsGroupbox.Size = new System.Drawing.Size(230, 65);
             this.DC_OptionsGroupbox.TabIndex = 31;
             this.DC_OptionsGroupbox.TabStop = false;
             this.DC_OptionsGroupbox.Text = "Print options";
@@ -109,9 +114,10 @@ namespace ApplicationGUI
             // DC_HideCompleted
             // 
             this.DC_HideCompleted.AutoSize = true;
-            this.DC_HideCompleted.Location = new System.Drawing.Point(7, 27);
+            this.DC_HideCompleted.Location = new System.Drawing.Point(6, 20);
+            this.DC_HideCompleted.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.DC_HideCompleted.Name = "DC_HideCompleted";
-            this.DC_HideCompleted.Size = new System.Drawing.Size(139, 24);
+            this.DC_HideCompleted.Size = new System.Drawing.Size(111, 19);
             this.DC_HideCompleted.TabIndex = 2;
             this.DC_HideCompleted.Text = "Hide completed";
             this.DC_HideCompleted.UseVisualStyleBackColor = true;
@@ -119,24 +125,30 @@ namespace ApplicationGUI
             // DC_PrintMissing
             // 
             this.DC_PrintMissing.AutoSize = true;
-            this.DC_PrintMissing.Location = new System.Drawing.Point(7, 57);
+            this.DC_PrintMissing.Location = new System.Drawing.Point(6, 43);
+            this.DC_PrintMissing.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.DC_PrintMissing.Name = "DC_PrintMissing";
-            this.DC_PrintMissing.Size = new System.Drawing.Size(115, 24);
+            this.DC_PrintMissing.Size = new System.Drawing.Size(95, 19);
             this.DC_PrintMissing.TabIndex = 3;
             this.DC_PrintMissing.Text = "Print missing";
             this.DC_PrintMissing.UseVisualStyleBackColor = true;
             // 
             // DC_ProgressBar
             // 
-            this.DC_ProgressBar.Location = new System.Drawing.Point(10, 204);
+            this.DC_ProgressBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.DC_ProgressBar.InsideMargin = 5;
+            this.DC_ProgressBar.LabelWidth = 40;
+            this.DC_ProgressBar.Location = new System.Drawing.Point(3, 153);
+            this.DC_ProgressBar.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.DC_ProgressBar.Name = "DC_ProgressBar";
             this.DC_ProgressBar.Percent = 0;
-            this.DC_ProgressBar.Size = new System.Drawing.Size(551, 45);
+            this.DC_ProgressBar.Size = new System.Drawing.Size(494, 34);
             this.DC_ProgressBar.TabIndex = 34;
             // 
             // DubbingCheckerView
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.DC_ProgressBar);
             this.Controls.Add(this.DC_ParseItemsBtn);
@@ -145,8 +157,9 @@ namespace ApplicationGUI
             this.Controls.Add(this.DC_InfoLabel);
             this.Controls.Add(this.DC_ParseBtn);
             this.Controls.Add(this.DC_OptionsGroupbox);
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "DubbingCheckerView";
-            this.Size = new System.Drawing.Size(572, 278);
+            this.Size = new System.Drawing.Size(500, 200);
             this.DC_OptionsGroupbox.ResumeLayout(false);
             this.DC_OptionsGroupbox.PerformLayout();
             this.ResumeLayout(false);

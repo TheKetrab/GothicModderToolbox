@@ -34,6 +34,7 @@ namespace ApplicationGUI.Controls
         }
 
         public int LabelWidth { get; set; } = 40;
+        public int InsideMargin { get; set; } = 3;
 
         protected override void OnResize(EventArgs e)
         {
@@ -43,8 +44,8 @@ namespace ApplicationGUI.Controls
         protected override void OnPaint(PaintEventArgs e)
         {
             percentLabel.Width = LabelWidth;
-            percentLabel.Left = this.Width - LabelWidth;
-            progressBar.Width = this.Width - LabelWidth;
+            percentLabel.Left = this.Width - LabelWidth - Margin.Right;
+            progressBar.Width = this.Width - LabelWidth - InsideMargin - Margin.Left - Margin.Right;
         }
 
     }

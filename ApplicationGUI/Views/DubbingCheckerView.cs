@@ -19,8 +19,7 @@ namespace ApplicationGUI
         
         [DllImport("user32.dll")]
         static extern bool HideCaret(IntPtr hWnd);
-
-
+        private DubbingCheckerManager dubbingCheckerManager = new();
 
         public DubbingCheckerView()
         {
@@ -29,51 +28,56 @@ namespace ApplicationGUI
 
         }
 
-        private DialogParser _dialogParser;
-        private ItemParser _itemParser;
-
-        private void DisableButtons()
+        private void DisableParsingButtons()
         {
             DC_ParseBtn.Enabled = false;
             DC_ParseItemsBtn.Enabled = false;
         }
 
-        private void EnableButtons()
+        private void EnableParsingButtons()
         {
             DC_ParseBtn.Enabled = true;
             DC_ParseItemsBtn.Enabled = true;
 
+        }
+        private void EnableSavingButtons()
+        {
+            DC_SaveBtn.Enabled = true;
+            DC_ExcelBtn.Enabled = true;
+        }
+        private void DisableSavingButtons()
+        {
+            DC_SaveBtn.Enabled = false;
+            DC_ExcelBtn.Enabled = false;
         }
 
         private async void DC_ParseBtn_Click(object sender, EventArgs e)
         {
             try
             {
-                DisableButtons();
+                DisableParsingButtons();
+                DisableSavingButtons();
+
                 DC_ProgressBar.Percent = 0;
                 DC_InfoLabel.Text = "Parsing scripts...";
 
                 Progress<ParserProgressModel> progress = new();
                 progress.ProgressChanged += ProgressOnProgressChanged;
 
-                _dialogParser = new DialogParser(
-                    SettingsManager.Instance.DC_DialogsPath,
-                    SettingsManager.Instance.DC_DubbingPath);
-                await Task.Run(() => _dialogParser.Parse(progress));
+                await dubbingCheckerManager.InvokeDialogParser(progress);
 
-                DC_SaveBtn.Enabled = true;
-                DC_ExcelBtn.Enabled = true;
+                EnableSavingButtons();
 
                 ProgressOnProgressChanged(this,
                     new ParserProgressModel("Parsing dialogs completed.", 100));
             }
             catch (Exception exc)
             {
-                MessageBox.Show("Error occured during parsing. Try again.");
+                MessageBox.Show(exc.Message);
             }
             finally
             {
-                EnableButtons();
+                EnableParsingButtons();
             }
 
         }
@@ -86,79 +90,30 @@ namespace ApplicationGUI
 
         private void DC_SaveBtn_Click(object sender, EventArgs e)
         {
-
-            StatsPrinter printer = new StatsPrinter(
-                SettingsManager.Instance.DC_OutputDirectory);
-
-            if (_dialogParser != null)
-            {
-                printer.PrintAlphabetical(_dialogParser.AllDialogs);
-                printer.PrintInfo(_dialogParser.Npcs,
-                    DC_HideCompleted.Checked, DC_PrintMissing.Checked);
-
-                printer.PrintMissingWavs(_dialogParser.GetMissingWavs());
-                printer.PrintUnnecessaryWavs(_dialogParser.GetUnnecessaryWavs());
-
-                printer.PrintMissingHero(_dialogParser.Npcs);
-                printer.PrintAllHero(_dialogParser.Npcs);
-
-                printer.PrintMissingNpcs(_dialogParser.Npcs);
-                printer.PrintAllNpcs(_dialogParser.Npcs);
-            }
-
-            if (_itemParser != null)
-            {
-                printer.PrintAllItems(_itemParser.AllItems);
-                printer.PrintUnusedItems(_itemParser.AllItems);
-            }
-
-            Process.Start(new ProcessStartInfo()
-            {
-                FileName = SettingsManager.Instance.DC_OutputDirectory,
-                UseShellExecute = true,
-                Verb = "open"
-            });
+            dubbingCheckerManager.SaveData(DC_HideCompleted.Checked, DC_PrintMissing.Checked);
         }
 
         private void DC_ExcelBtn_Click(object sender, EventArgs e)
         {
-            if (_dialogParser != null)
-            {
-                ExcelMaker.WriteDialogsExcel(SettingsManager.Instance.DC_OutputDirectory, _dialogParser);
-            }
-
-            if (_itemParser != null)
-            {
-                ExcelMaker.WriteItemsExcel(SettingsManager.Instance.DC_OutputDirectory, _itemParser);
-            }
-
-            Process.Start(new ProcessStartInfo()
-            {
-                FileName = SettingsManager.Instance.DC_OutputDirectory,
-                UseShellExecute = true,
-                Verb = "open"
-            });
-
+            dubbingCheckerManager.SaveExcelData();
         }
 
         private async void DC_ParseItemsBtn_Click(object sender, EventArgs e)
         {
             try
             {
-                DisableButtons();
+                DisableParsingButtons();
+                DisableSavingButtons();
+
                 DC_ProgressBar.Percent = 0;
                 DC_InfoLabel.Text = "Parsing items...";
 
                 Progress<ParserProgressModel> progress = new();
                 progress.ProgressChanged += ProgressOnProgressChanged;
 
-                _itemParser = new ItemParser(
-                    SettingsManager.Instance.DC_ItemsDirectory,
-                    SettingsManager.Instance.DC_ItemsLookupDirectory);
-                await Task.Run(() => _itemParser.Parse(progress));
+                await dubbingCheckerManager.InvokeItemParser(progress);
 
-                DC_SaveBtn.Enabled = true;
-                DC_ExcelBtn.Enabled = true;
+                EnableSavingButtons();
 
                 ProgressOnProgressChanged(this,
                     new ParserProgressModel("Parsing items completed.", 100));
@@ -169,7 +124,7 @@ namespace ApplicationGUI
             }
             finally
             {
-                EnableButtons();
+                EnableParsingButtons();
             }
         }
 

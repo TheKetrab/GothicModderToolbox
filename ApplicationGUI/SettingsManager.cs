@@ -23,6 +23,9 @@ namespace ApplicationGUI
 
         private int _encoding;
 
+        public int AT_MaxCharacters { get; set; } = 300000;
+        public string AT_SpellcheckerDictionaryDir { get; set; } = @"C:\Users\ketra\Desktop\jezykpl"; // TODO config
+
 
         public void UpdateConfigFile()
         {

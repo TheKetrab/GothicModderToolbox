@@ -17,77 +17,78 @@ namespace ApplicationGUI
         [DllImport("user32.dll")]
         static extern bool HideCaret(IntPtr hWnd);
 
-        private Translator _translator;
-
+        private AutoTranslatorManager autoTranslatorManager = new();
 
         public AutoTranslatorView()
         {
             InitializeComponent();
-
             AT_InfoLabel.GotFocus += (s1, e1) => { HideCaret(AT_InfoLabel.Handle); };
-
         }
 
 
         private async void AT_TranslateBtn_Click(object sender, EventArgs e)
         {
-            if (_translator == null)
-                return;
-
-            MessageBox.Show($"Total characters {_translator.TotalCharacters}");
-            if (_translator.TotalCharacters > 300000)
+            try
             {
-                MessageBox.Show("Too many characters! Forbidden translation.");
-                return;
+                DisableButtons();
+                AT_ProgressBar.Percent = 0;
+                AT_InfoLabel.Text = "Translating...";
+
+                if (MessageBox.Show("Are you sure?", "", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                {
+                    Progress<TranslationProgressModel> progress = new();
+                    progress.ProgressChanged += ProgressOnProgressChanged;
+
+                    await autoTranslatorManager.Translate(progress);
+                }
+
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show(exc.Message);
+            }
+            finally
+            {
+                EnableButtons();
             }
 
-            if (MessageBox.Show("Are you sure?", "", MessageBoxButtons.YesNo) != DialogResult.Yes)
-                return;
-
-            Progress<TranslationProgressModel> progress = new();
-            progress.ProgressChanged += ProgressOnProgressChanged;
-            await _translator.TranslateAsync(SettingsManager.Instance.AT_ApiKey, progress);
         }
 
         private async void AT_AnalyzeBtn_Click(object sender, EventArgs e)
         {
             try
             {
-                DisableATButtons();
+                DisableButtons();
                 AT_ProgressBar.Percent = 0;
                 AT_InfoLabel.Text = "Analyzing scripts...";
 
                 Progress<TranslationProgressModel> progress = new();
                 progress.ProgressChanged += ProgressOnProgressChanged;
 
-                _translator = new Translator(
-                    SettingsManager.Instance.AT_TranslateInputPath,
-                    SettingsManager.Instance.AT_TranslateOutputPath,
-                    1250); // TODO encoding
-                _translator.InfoEvt += (o, s) => { AT_SummaryLbl.Text = s; };
+                await autoTranslatorManager.InvokeTranslator(progress);
 
-                await _translator.AnalyzeAsync(progress);
+                AT_SummaryLabel.Text = autoTranslatorManager.GetSummary();
 
             }
             catch (Exception exc)
             {
-                MessageBox.Show($"Error: {exc.Message}");
+                MessageBox.Show(exc.Message);
             }
             finally
             {
-                EnableATButtons();
+                EnableButtons();
             }
 
         }
 
-        private void DisableATButtons()
+        private void DisableButtons()
         {
             AT_AnalyzeBtn.Enabled = false;
             AT_TranslateBtn.Enabled = false;
             AT_ReplaceBtn.Enabled = false;
         }
 
-        private void EnableATButtons()
+        private void EnableButtons()
         {
             AT_AnalyzeBtn.Enabled = true;
             AT_TranslateBtn.Enabled = true;
@@ -104,23 +105,23 @@ namespace ApplicationGUI
         {
             try
             {
-                DisableATButtons();
+                DisableButtons();
                 AT_ProgressBar.Percent = 0;
                 AT_InfoLabel.Text = "Replacing scripts...";
 
                 Progress<TranslationProgressModel> progress = new();
                 progress.ProgressChanged += ProgressOnProgressChanged;
 
-                await _translator.ReplaceAsync(progress);
+                await autoTranslatorManager.Replace(progress);
 
             }
             catch (Exception exc)
             {
-                MessageBox.Show("Error");
+                MessageBox.Show(exc.Message);
             }
             finally
             {
-                EnableATButtons();
+                EnableButtons();
             }
         }
 
@@ -128,48 +129,29 @@ namespace ApplicationGUI
         {
             try
             {
-                DisableATButtons();
+                DisableButtons();
                 AT_ProgressBar.Percent = 0;
                 AT_InfoLabel.Text = "Spellchecking...";
 
                 Progress<TranslationProgressModel> progress = new();
                 progress.ProgressChanged += ProgressOnProgressChanged;
 
-                Spellchecker spellchecker = new Spellchecker(@"C:\Users\ketra\Desktop\jezykpl");
-                spellchecker.SpellcheckerEvt += (o, model) =>
+                var errors = autoTranslatorManager.Spellcheck();
+                foreach (var error in errors)
                 {
-                    switch (model.Reason)
-                    {
-                        case SpellcheckerEvtReason.Typo:
-                            AT_InfoLabel.AppendText($"{Environment.NewLine}Typo: {model.Args[0]}");
-                            //for (int i = 1; i < model.Args.Length; i++)
-                            //    AT_InfoLabel.AppendText($" {model.Args[i]}");
-                            break;
-                        case SpellcheckerEvtReason.StartsWithLowerCase:
-                            AT_InfoLabel.AppendText($"{Environment.NewLine}LowerCase: {model.Args[0]}");
-                            break;
-                        case SpellcheckerEvtReason.EndsWithoutDot:
-                            AT_InfoLabel.AppendText($"{Environment.NewLine}EndsWithDot: {model.Args[0]}");
-                            break;
-                        default:
-                            AT_InfoLabel.AppendText($"{Environment.NewLine}...: {model.Args[0]}");
-                            break;
-                    }
-                };
+                    AT_InfoLabel.AppendText($"{Environment.NewLine}{error}");
+                }
 
-                var entries = _translator.GetEntries();
-                spellchecker.AnalyzeTypos(entries);
                 AT_InfoLabel.AppendText($"{Environment.NewLine}--- DONE ---");
-                //spellchecker.AnalyzeCapitalsAndDots(entries,SpellcheckerFilters.ForUppercaseAndDot);
 
             }
             catch (Exception exc)
             {
-                MessageBox.Show("Error");
+                MessageBox.Show(exc.Message);
             }
             finally
             {
-                EnableATButtons();
+                EnableButtons();
             }
         }
 
