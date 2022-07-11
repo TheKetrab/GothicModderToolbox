@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GothicChecker.Models
+namespace GothicToolsLib.Models
 {
     public class ParserProgressModel
     {

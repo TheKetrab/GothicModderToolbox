@@ -5,12 +5,12 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using GothicChecker.Models;
+using GothicToolsLib.Models;
 using NPOI.OpenXmlFormats.Spreadsheet;
 using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
 
-namespace GothicChecker
+namespace GothicToolsLib.ContentAnalyzer
 {
     public class ExcelMaker
     {

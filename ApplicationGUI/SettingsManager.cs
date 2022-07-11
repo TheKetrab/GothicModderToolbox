@@ -46,7 +46,7 @@ namespace ApplicationGUI
             DC_DubbingPath = data["Paths"]["DC_dubbingPath"];
             DC_ItemsDirectory = data["Paths"]["DC_itemsDirectory"];
             DC_ItemsLookupDirectory = data["Paths"]["DC_itemsLookupDirectory"];
-            DC_OutputDirectory = data["Paths"]["outputDirectory"];
+            DC_OutputDirectory = data["Paths"]["DC_outputDirectory"];
 
             // TODO
             AT_TranslateInputPath = data["Paths"]["AT_translateInputPath"];

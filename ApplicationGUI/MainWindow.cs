@@ -12,9 +12,6 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.VisualStyles;
 using ApplicationGUI.Dialogs;
-using GothicAutoTranslator;
-using GothicChecker;
-using GothicChecker.Models;
 using IniParser;
 using IniParser.Model;
 

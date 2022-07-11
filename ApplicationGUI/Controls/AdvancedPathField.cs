@@ -20,6 +20,11 @@ namespace ApplicationGUI.Controls
             this.openBtn.Text = "";
             this.openBtn.Image = new Bitmap(Resources.btn_dir)
                 .GetThumbnailImage(16,13,null,IntPtr.Zero);
+
+            this.pathTextBox.TextChanged += (o, a) =>
+            {
+                Path = ((TextBox)o)?.Text;
+            };
         }
 
         const int margin = 3;

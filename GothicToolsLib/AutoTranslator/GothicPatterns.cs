@@ -2,7 +2,7 @@
 using System.Formats.Asn1;
 using System.Text.RegularExpressions;
 
-namespace GothicAutoTranslator
+namespace GothicToolsLib.AutoTranslator
 {
     public static class GothicPatterns
     {

@@ -3,14 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31515.178
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GothicDecibelsModulator", "GothicDecibelsModulator\GothicDecibelsModulator.csproj", "{90D01D2A-15B2-47AF-A3BE-839EE7DEE7F8}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GothicChecker", "GothicChecker\GothicChecker.csproj", "{6634A3BE-482B-4C90-AAD8-3CD8CE72BD03}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GothicMakeWav", "GothicMakeWav\GothicMakeWav.csproj", "{3D1531CB-B6BE-4241-B100-E7B46FCA6D86}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GothicAutoTranslator", "GothicAutoTranslator\GothicAutoTranslator.csproj", "{88296C38-B378-498E-B9F3-C2E2016CE8D0}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApplicationGUI", "ApplicationGUI\ApplicationGUI.csproj", "{709EDB39-E6EA-402A-AA75-9E9400C195B5}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F6D2FCC5-2C13-4576-BB58-69E85C083F69}"
@@ -18,32 +10,22 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		config.ini = config.ini
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GothicToolsLib", "GothicToolsLib\GothicToolsLib.csproj", "{442704A4-B854-4D96-9825-63095700C709}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{90D01D2A-15B2-47AF-A3BE-839EE7DEE7F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{90D01D2A-15B2-47AF-A3BE-839EE7DEE7F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{90D01D2A-15B2-47AF-A3BE-839EE7DEE7F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{90D01D2A-15B2-47AF-A3BE-839EE7DEE7F8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6634A3BE-482B-4C90-AAD8-3CD8CE72BD03}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6634A3BE-482B-4C90-AAD8-3CD8CE72BD03}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6634A3BE-482B-4C90-AAD8-3CD8CE72BD03}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6634A3BE-482B-4C90-AAD8-3CD8CE72BD03}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3D1531CB-B6BE-4241-B100-E7B46FCA6D86}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3D1531CB-B6BE-4241-B100-E7B46FCA6D86}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3D1531CB-B6BE-4241-B100-E7B46FCA6D86}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3D1531CB-B6BE-4241-B100-E7B46FCA6D86}.Release|Any CPU.Build.0 = Release|Any CPU
-		{88296C38-B378-498E-B9F3-C2E2016CE8D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{88296C38-B378-498E-B9F3-C2E2016CE8D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{88296C38-B378-498E-B9F3-C2E2016CE8D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{88296C38-B378-498E-B9F3-C2E2016CE8D0}.Release|Any CPU.Build.0 = Release|Any CPU
 		{709EDB39-E6EA-402A-AA75-9E9400C195B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{709EDB39-E6EA-402A-AA75-9E9400C195B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{709EDB39-E6EA-402A-AA75-9E9400C195B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{709EDB39-E6EA-402A-AA75-9E9400C195B5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{442704A4-B854-4D96-9825-63095700C709}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{442704A4-B854-4D96-9825-63095700C709}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{442704A4-B854-4D96-9825-63095700C709}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{442704A4-B854-4D96-9825-63095700C709}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

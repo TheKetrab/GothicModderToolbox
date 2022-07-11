@@ -4,8 +4,8 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using GothicChecker;
-using GothicChecker.Models;
+using GothicToolsLib.ContentAnalyzer;
+using GothicToolsLib.Models;
 
 namespace ApplicationGUI
 {

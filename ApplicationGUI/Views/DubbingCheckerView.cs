@@ -9,8 +9,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using GothicChecker;
-using GothicChecker.Models;
+using GothicToolsLib.Models;
 
 namespace ApplicationGUI
 {

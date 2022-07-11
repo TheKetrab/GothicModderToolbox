@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using GothicChecker.Models;
+using GothicToolsLib.Models;
 
-namespace GothicChecker
+namespace GothicToolsLib.ContentAnalyzer
 {
     public class NpcDictionary : IEnumerable<NpcModel>
     {

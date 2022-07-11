@@ -14,7 +14,7 @@ using Google.Cloud.Translate.V3;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace GothicAutoTranslator
+namespace GothicToolsLib.AutoTranslator
 {
 
     public struct EntryData

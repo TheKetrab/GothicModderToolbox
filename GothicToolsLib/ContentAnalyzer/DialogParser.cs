@@ -5,11 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using System.Text.RegularExpressions;
-using GothicChecker.Models;
-using NPOI.SS.Formula.Functions;
+using GothicToolsLib.Models;
 using Match = System.Text.RegularExpressions.Match;
 
-namespace GothicChecker
+namespace GothicToolsLib.ContentAnalyzer
 {
     public class DialogParser
     {

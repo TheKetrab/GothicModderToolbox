@@ -5,10 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using GothicChecker;
-using GothicChecker.Models;
+using GothicToolsLib.Models;
 
-namespace GothicChecker
+namespace GothicToolsLib.ContentAnalyzer
 {
     public class ItemParser
     {
