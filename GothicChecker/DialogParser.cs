@@ -35,8 +35,34 @@ namespace GothicChecker
         private readonly string _dubbingPath;
         private readonly string _scriptsPath;
 
+
+        public void ValidatePaths(string scriptsPath, string dubbingPath)
+        {
+            if (string.IsNullOrEmpty(scriptsPath))
+            {
+                throw new ArgumentException("Please configure path in options: scriptsPath.");
+            }
+
+            if (string.IsNullOrEmpty(dubbingPath))
+            {
+                throw new ArgumentException("Please configure path in options: dubbingPath.");
+            }
+
+            if (!Directory.Exists(scriptsPath))
+            {
+                throw new ArgumentException("Given path does not exist: scriptsPath.");
+            }
+
+            if (!Directory.Exists(dubbingPath))
+            {
+                throw new ArgumentException("Given path does not exist: dubbingPath.");
+            }
+        }
+
         public DialogParser(string scriptsPath, string dubbingPath)
         {
+            ValidatePaths(scriptsPath, dubbingPath);
+
             _scriptsPath = scriptsPath;
             _dubbingPath = dubbingPath;
 

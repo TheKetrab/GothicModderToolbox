@@ -51,13 +51,13 @@ namespace GothicChecker
             using StreamWriter sw = new StreamWriter($"{_outputPath}/{filename}", true, Encoding.Default);
 
             int total = npcs.Sum(x => x.Dialogs.Count);
-            int done = npcs.Sum(x => x.DialogesDone);
+            int done = npcs.Sum(x => x.DialogsDone);
 
             sw.WriteLine();
             sw.WriteLine(" --- === Stats: === --- ");
 
-            double heroPercent = npcs[0].DialogesDone * 100.0 / npcs[0].Dialogs.Count;
-            double npcsPercent = (done - npcs[0].DialogesDone) * 100.0 / (total - npcs[0].Dialogs.Count);
+            double heroPercent = npcs[0].DialogsDone * 100.0 / npcs[0].Dialogs.Count;
+            double npcsPercent = (done - npcs[0].DialogsDone) * 100.0 / (total - npcs[0].Dialogs.Count);
             double totalPercent = done * 100.0 / total;
 
             sw.WriteLine("HERO:  " + Math.Round(heroPercent, 2) + "%");

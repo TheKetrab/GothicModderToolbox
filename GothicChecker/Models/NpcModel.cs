@@ -12,9 +12,9 @@ namespace GothicChecker.Models
     {
         public int Id { get; }
         public string Name { get; }
-        public int DialogesDone => Dialogs.Count - Missing.Count;
+        public int DialogsDone => Dialogs.Count - Missing.Count;
 
-        public double Percent => DialogesDone * 100.0 / Dialogs.Count;
+        public double Percent => DialogsDone * 100.0 / Dialogs.Count;
 
         public List<AIOutputModel> Missing = new();
         public List<AIOutputModel> Dialogs = new();
