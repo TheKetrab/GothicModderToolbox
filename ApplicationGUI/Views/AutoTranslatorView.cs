@@ -8,151 +8,78 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using ApplicationGUI.Controls;
 using GothicToolsLib.Models;
 
 namespace ApplicationGUI
 {
-    public partial class AutoTranslatorView : UserControl
+    public partial class AutoTranslatorView : ProcessingAbstractView
     {
-        [DllImport("user32.dll")]
-        static extern bool HideCaret(IntPtr hWnd);
-
         private AutoTranslatorManager autoTranslatorManager = new();
 
         public AutoTranslatorView()
         {
             InitializeComponent();
-            AT_InfoLabel.GotFocus += (s1, e1) => { HideCaret(AT_InfoLabel.Handle); };
         }
 
+        protected override TextBox InfoLabel => AT_InfoLabel;
+        protected override AdvancedProgressBar ProgressBar => AT_ProgressBar;
 
         private async void AT_TranslateBtn_Click(object sender, EventArgs e)
         {
-            try
+            await Process("Translating...", "", async (progress) =>
             {
-                DisableButtons();
-                AT_ProgressBar.Percent = 0;
-                AT_InfoLabel.Text = "Translating...";
-
                 if (MessageBox.Show("Are you sure?", "", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
-                    Progress<ProgressModel> progress = new();
-                    progress.ProgressChanged += ProgressOnProgressChanged;
-
                     await autoTranslatorManager.Translate(progress);
                 }
-
-            }
-            catch (Exception exc)
-            {
-                MessageBox.Show(exc.Message);
-            }
-            finally
-            {
-                EnableButtons();
-            }
-
+            });
         }
 
         private async void AT_AnalyzeBtn_Click(object sender, EventArgs e)
         {
-            try
+            await Process("Analyzing scripts...", "", async (progress) =>
             {
-                DisableButtons();
-                AT_ProgressBar.Percent = 0;
-                AT_InfoLabel.Text = "Analyzing scripts...";
-
-                Progress<ProgressModel> progress = new();
-                progress.ProgressChanged += ProgressOnProgressChanged;
-
                 await autoTranslatorManager.InvokeTranslator(progress);
-
                 AT_SummaryLabel.Text = autoTranslatorManager.GetSummary();
-
-            }
-            catch (Exception exc)
-            {
-                MessageBox.Show(exc.Message);
-            }
-            finally
-            {
-                EnableButtons();
-            }
-
+            });
         }
 
-        private void DisableButtons()
+        protected override void DisableButtons()
         {
             AT_AnalyzeBtn.Enabled = false;
             AT_TranslateBtn.Enabled = false;
             AT_ReplaceBtn.Enabled = false;
+            AT_SpellcheckerBtn.Enabled = false;
         }
 
-        private void EnableButtons()
+        protected override void EnableButtons()
         {
             AT_AnalyzeBtn.Enabled = true;
             AT_TranslateBtn.Enabled = true;
             AT_ReplaceBtn.Enabled = true;
-        }
-
-        private void ProgressOnProgressChanged(object? sender, ProgressModel e)
-        {
-            AT_ProgressBar.Percent = e.Percent;
-            AT_InfoLabel.AppendText($"{Environment.NewLine}{e.Msg}");
+            AT_SpellcheckerBtn.Enabled = true;
         }
 
         private async void AT_ReplaceBtn_Click(object sender, EventArgs e)
         {
-            try
+            await Process("Replacing scripts...", "", async (progress) =>
             {
-                DisableButtons();
-                AT_ProgressBar.Percent = 0;
-                AT_InfoLabel.Text = "Replacing scripts...";
-
-                Progress<ProgressModel> progress = new();
-                progress.ProgressChanged += ProgressOnProgressChanged;
-
                 await autoTranslatorManager.Replace(progress);
-
-            }
-            catch (Exception exc)
-            {
-                MessageBox.Show(exc.Message);
-            }
-            finally
-            {
-                EnableButtons();
-            }
+            });
         }
 
-        private void AT_SpellcheckerBtn_Click(object sender, EventArgs e)
+        private async void AT_SpellcheckerBtn_Click(object sender, EventArgs e)
         {
-            try
+            await Process("Spellchecking...", "--- DONE ---", async (progress) =>
             {
-                DisableButtons();
-                AT_ProgressBar.Percent = 0;
-                AT_InfoLabel.Text = "Spellchecking...";
-
-                Progress<ProgressModel> progress = new();
-                progress.ProgressChanged += ProgressOnProgressChanged;
-
                 var errors = autoTranslatorManager.Spellcheck();
                 foreach (var error in errors)
                 {
                     AT_InfoLabel.AppendText($"{Environment.NewLine}{error}");
                 }
+            });
 
-                AT_InfoLabel.AppendText($"{Environment.NewLine}--- DONE ---");
-
-            }
-            catch (Exception exc)
-            {
-                MessageBox.Show(exc.Message);
-            }
-            finally
-            {
-                EnableButtons();
-            }
         }
 
     }

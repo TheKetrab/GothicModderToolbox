@@ -9,36 +9,35 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using ApplicationGUI.Controls;
 using GothicToolsLib.Models;
 
 namespace ApplicationGUI
 {
-    public partial class DubbingCheckerView : UserControl
+    public partial class DubbingCheckerView : ProcessingAbstractView
     {
-        
-        [DllImport("user32.dll")]
-        static extern bool HideCaret(IntPtr hWnd);
         private DubbingCheckerManager dubbingCheckerManager = new();
 
         public DubbingCheckerView()
         {
             InitializeComponent();
-            DC_InfoLabel.GotFocus += (s1, e1) => { HideCaret(DC_InfoLabel.Handle); };
-
         }
 
-        private void DisableParsingButtons()
+        protected override TextBox InfoLabel => DC_InfoLabel;
+        protected override AdvancedProgressBar ProgressBar => DC_ProgressBar;
+
+        protected override void DisableButtons()
         {
             DC_ParseBtn.Enabled = false;
             DC_ParseItemsBtn.Enabled = false;
         }
 
-        private void EnableParsingButtons()
+        protected override void EnableButtons()
         {
             DC_ParseBtn.Enabled = true;
             DC_ParseItemsBtn.Enabled = true;
-
         }
+
         private void EnableSavingButtons()
         {
             DC_SaveBtn.Enabled = true;
@@ -52,39 +51,12 @@ namespace ApplicationGUI
 
         private async void DC_ParseBtn_Click(object sender, EventArgs e)
         {
-            try
+            await Process("Parsing scripts...", "Parsing dialogs completed.", async (progress) =>
             {
-                DisableParsingButtons();
                 DisableSavingButtons();
-
-                DC_ProgressBar.Percent = 0;
-                DC_InfoLabel.Text = "Parsing scripts...";
-
-                Progress<ProgressModel> progress = new();
-                progress.ProgressChanged += ProgressOnProgressChanged;
-
                 await dubbingCheckerManager.InvokeDialogParser(progress);
-
                 EnableSavingButtons();
-
-                ProgressOnProgressChanged(this,
-                    new ProgressModel("Parsing dialogs completed.", 100));
-            }
-            catch (Exception exc)
-            {
-                MessageBox.Show(exc.Message);
-            }
-            finally
-            {
-                EnableParsingButtons();
-            }
-
-        }
-
-        private void ProgressOnProgressChanged(object? sender, ProgressModel e)
-        {
-            DC_ProgressBar.Percent = e.Percent;
-            DC_InfoLabel.AppendText($"{Environment.NewLine}{e.Msg}");
+            });
         }
 
         private void DC_SaveBtn_Click(object sender, EventArgs e)
@@ -99,32 +71,12 @@ namespace ApplicationGUI
 
         private async void DC_ParseItemsBtn_Click(object sender, EventArgs e)
         {
-            try
+            await Process("Parsing items...", "Parsing items completed.", async (progress) =>
             {
-                DisableParsingButtons();
                 DisableSavingButtons();
-
-                DC_ProgressBar.Percent = 0;
-                DC_InfoLabel.Text = "Parsing items...";
-
-                Progress<ProgressModel> progress = new();
-                progress.ProgressChanged += ProgressOnProgressChanged;
-
                 await dubbingCheckerManager.InvokeItemParser(progress);
-
                 EnableSavingButtons();
-
-                ProgressOnProgressChanged(this,
-                    new ProgressModel("Parsing items completed.", 100));
-            }
-            catch (Exception exc)
-            {
-                MessageBox.Show("Error occured during parsing. Try again.");
-            }
-            finally
-            {
-                EnableParsingButtons();
-            }
+            });
         }
 
 

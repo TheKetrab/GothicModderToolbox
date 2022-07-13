@@ -29,7 +29,7 @@ namespace ApplicationGUI
         /// </summary>
         private void InitializeComponent()
         {
-            this.DM_ProgressBar = new ApplicationGUI.Controls.AdvancedProgressBar();
+            this.DM_AdvancedProgressBar = new ApplicationGUI.Controls.AdvancedProgressBar();
             this.DM_InfoLabel = new System.Windows.Forms.TextBox();
             this.DM_IncVolumeMaxRadioBtn = new System.Windows.Forms.RadioButton();
             this.DM_IncVolumeDbRadioBtn = new System.Windows.Forms.RadioButton();
@@ -41,14 +41,14 @@ namespace ApplicationGUI
             // 
             // DM_ProgressBar
             // 
-            this.DM_ProgressBar.InsideMargin = 3;
-            this.DM_ProgressBar.LabelWidth = 40;
-            this.DM_ProgressBar.Location = new System.Drawing.Point(8, 201);
-            this.DM_ProgressBar.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.DM_ProgressBar.Name = "DM_ProgressBar";
-            this.DM_ProgressBar.Percent = 0;
-            this.DM_ProgressBar.Size = new System.Drawing.Size(626, 34);
-            this.DM_ProgressBar.TabIndex = 29;
+            this.DM_AdvancedProgressBar.InsideMargin = 3;
+            this.DM_AdvancedProgressBar.LabelWidth = 40;
+            this.DM_AdvancedProgressBar.Location = new System.Drawing.Point(8, 201);
+            this.DM_AdvancedProgressBar.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.DM_AdvancedProgressBar.Name = "DM_ProgressBar";
+            this.DM_AdvancedProgressBar.Percent = 0;
+            this.DM_AdvancedProgressBar.Size = new System.Drawing.Size(626, 34);
+            this.DM_AdvancedProgressBar.TabIndex = 29;
             // 
             // DM_InfoLabel
             // 
@@ -117,7 +117,7 @@ namespace ApplicationGUI
             this.Controls.Add(this.DM_IncVolumeSlider);
             this.Controls.Add(this.DM_IncVolumeDbRadioBtn);
             this.Controls.Add(this.DM_IncVolumeMaxRadioBtn);
-            this.Controls.Add(this.DM_ProgressBar);
+            this.Controls.Add(this.DM_AdvancedProgressBar);
             this.Controls.Add(this.DM_InfoLabel);
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "DecibelsModulatorView";
@@ -130,12 +130,12 @@ namespace ApplicationGUI
 
         #endregion
 
-        private Controls.AdvancedProgressBar DM_ProgressBar;
-        private System.Windows.Forms.TextBox DM_InfoLabel;
         private System.Windows.Forms.RadioButton DM_IncVolumeMaxRadioBtn;
         private System.Windows.Forms.RadioButton DM_IncVolumeDbRadioBtn;
         private System.Windows.Forms.TrackBar DM_IncVolumeSlider;
         private System.Windows.Forms.Label DM_IncVolumeLbl;
         private System.Windows.Forms.Button DM_IncVolumeBtn;
+        private System.Windows.Forms.TextBox DM_InfoLabel;
+        private ApplicationGUI.Controls.AdvancedProgressBar DM_AdvancedProgressBar;
     }
 }
