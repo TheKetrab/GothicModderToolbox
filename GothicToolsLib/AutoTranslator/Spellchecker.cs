@@ -19,31 +19,37 @@ namespace GothicToolsLib.AutoTranslator
     public class Spellchecker
     {
 
+        public bool Inited { get; private set; }
+
         private HashSet<string> _words = new();
 
         public event EventHandler<SpellcheckerEvtModel> SpellcheckerEvt;
 
-        public Spellchecker(string wordsPath)
+        public Spellchecker()
         {
-            InitializeHashMap(wordsPath);
         }
 
-        void InitializeHashMap(string wordsPath)
+        public async Task InitializeHashMap(string wordsPath)
         {
             string[] files = Directory.GetFiles(wordsPath, "*", SearchOption.AllDirectories);
-            foreach (string file in files)
+
+            await Task.Run(() =>
             {
-                var lines = File.ReadLines(file);
-                foreach (var line in lines)
+                foreach (string file in files)
                 {
-                    var splitted = line.Split(',');
-                    foreach (var s in splitted)
+                    var lines = File.ReadLines(file);
+                    foreach (var line in lines)
                     {
-                        _words.Add(s.Trim().ToUpper());
+                        var splitted = line.Split(',');
+                        foreach (var s in splitted)
+                        {
+                            _words.Add(s.Trim().ToUpper());
+                        }
                     }
                 }
+            });
 
-            }
+            Inited = true;
         }
 
         public static bool ValidForFilter(EntryData entry, SpellcheckerFilters filters)
@@ -70,22 +76,37 @@ namespace GothicToolsLib.AutoTranslator
             return false;
         }
 
-        public void AnalyzeTypos(List<EntryData> lst, SpellcheckerFilters filter = SpellcheckerFilters.None)
+
+        public void AnalyzeTyposSingleEntry(EntryData entry)
         {
+            string[] words = GetWords(entry.Text);
+            foreach (var word in words)
+            {
+                if (!_words.Contains(word.ToUpper()))
+                {
+                    SpellcheckerEvt?.Invoke(this, new SpellcheckerEvtModel(
+                        SpellcheckerEvtReason.Typo, word, entry.Text, entry.File, entry.Line.ToString()));
+                }
+            }
+        }
+
+        public async Task AnalyzeTyposAsync(List<EntryData> lst, SpellcheckerFilters filter = SpellcheckerFilters.None, IProgress<ProgressModel> progress = null)
+        {
+            if (!Inited)
+                throw new Exception("Spellchecker hashmap is not inited.");
+
+            int n = lst.Count, i = 0;
             foreach (var entry in lst)
             {
+                ++i;
                 if (!ValidForFilter(entry, filter))
                     continue;
 
-                string[] words = GetWords(entry.Text);
-                foreach (var word in words)
+                await Task.Run(() => AnalyzeTyposSingleEntry(entry));
+                progress?.Report(new ProgressModel()
                 {
-                    if (!_words.Contains(word.ToUpper()))
-                    {
-                        SpellcheckerEvt?.Invoke(this, new SpellcheckerEvtModel(
-                            SpellcheckerEvtReason.Typo, word, entry.Text, entry.File, entry.Line.ToString()));
-                    }
-                }
+                    Percent = (int)(i * 100 / n)
+                });
             }
         }
 

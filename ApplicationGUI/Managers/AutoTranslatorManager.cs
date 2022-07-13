@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -50,17 +51,25 @@ namespace ApplicationGUI
         }
 
 
-        public List<string> Spellcheck()
+        public async Task<List<string>> Spellcheck(IProgress<ProgressModel> progress)
         {
             List<string> errors = new List<string>();
 
-            Spellchecker spellchecker = new Spellchecker(SettingsManager.Instance.AT_SpellcheckerDictionaryDir);
+            progress.Report(new ProgressModel()
+            {
+                Msg = "Initializing dictionary...",
+                Percent = 1
+            });
+
+            Spellchecker spellchecker = new Spellchecker();
+            await spellchecker.InitializeHashMap(SettingsManager.Instance.AT_SpellcheckerDictionaryDir);
+
             spellchecker.SpellcheckerEvt += (o, model) =>
             {
                 switch (model.Reason)
                 {
                     case SpellcheckerEvtReason.Typo:
-                        errors.Add($"Typo: {model.Args[0]}");
+                        errors.Add($"Typo: [{model.Args[0]}] {new string('\t',3)} (file {new FileInfo(model.Args[2]).Name}, line: {model.Args[3]})");
                         break;
                     case SpellcheckerEvtReason.StartsWithLowerCase:
                         errors.Add($"LowerCase: {model.Args[0]}");
@@ -75,7 +84,7 @@ namespace ApplicationGUI
             };
 
             var entries = translator.GetEntries();
-            spellchecker.AnalyzeTypos(entries);
+            await spellchecker.AnalyzeTyposAsync(entries,progress:progress);
             //spellchecker.AnalyzeCapitalsAndDots(entries,SpellcheckerFilters.ForUppercaseAndDot);
 
             return errors;

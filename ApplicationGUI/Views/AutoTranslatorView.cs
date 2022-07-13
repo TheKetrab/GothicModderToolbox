@@ -73,7 +73,7 @@ namespace ApplicationGUI
         {
             await Process("Spellchecking...", "--- DONE ---", async (progress) =>
             {
-                var errors = autoTranslatorManager.Spellcheck();
+                var errors = await autoTranslatorManager.Spellcheck(progress);
                 foreach (var error in errors)
                 {
                     AT_InfoLabel.AppendText($"{Environment.NewLine}{error}");

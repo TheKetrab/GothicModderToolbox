@@ -35,7 +35,8 @@ namespace ApplicationGUI
         private void ProgressOnProgressChanged(object? sender, ProgressModel e)
         {
             ProgressBar.Percent = e.Percent;
-            InfoLabel.AppendText($"{Environment.NewLine}{e.Msg}");
+            if (!string.IsNullOrEmpty(e.Msg))
+                InfoLabel.AppendText($"{Environment.NewLine}{e.Msg}");
         }
 
         protected async Task Process(string beginMsg, string endMsg, Func<Progress<ProgressModel>, Task> action)
