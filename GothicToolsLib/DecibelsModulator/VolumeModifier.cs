@@ -6,18 +6,19 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using GothicToolsLib.Models;
 
 namespace GothicToolsLib.DecibelsModulator
 {
     public static class VolumeModifier
     {
-        public static void IncreaseVolumeGothicWav(FFmpegProcessor ffmpeg, FileInfo fi, double dB)
+        public static void IncreaseVolumeSingleGothicWav(FFmpegProcessor ffmpeg, FileInfo fi, string outputDir, double dB)
         {
-            string newFile = Path.Combine(ffmpeg.OutputDir,fi.Name);
+            string newFile = Path.Combine(outputDir,fi.Name);
             string dbModifier = (-dB).ToString("0.0", CultureInfo.InvariantCulture);
 
             string arguments = $"-i {fi.FullName} "
-                               + $"-filter:a \"volume={dbModifier}dB\" " // ....... increase volume
+                               + $"-filter:a \"volume={dbModifier}dB\" " // increase volume
                                + "-ar 44100 " // .......................... sampling
                                + "-ac 1 -map_metadata -1 " // ............. destroy metadata
                                + "-f wav -acodec adpcm_ima_wav " // ....... codec
@@ -27,13 +28,27 @@ namespace GothicToolsLib.DecibelsModulator
             ffmpeg.Run(arguments);
         }
 
-        public static void IncreaseVolumeGothicWavMax(FFmpegProcessor ffmpeg, FileInfo fi)
+        public static void IncreaseVolumeSingleGothicWavMax(FFmpegProcessor ffmpeg, FileInfo fi, string outputDir)
         {
             double maxVolume = DetailsExplorer.GetMaxVolume(ffmpeg,fi);
-            IncreaseVolumeGothicWav(ffmpeg, fi, maxVolume);
+            IncreaseVolumeSingleGothicWav(ffmpeg, fi, outputDir, maxVolume);
         }
 
-        public static void IncreaseVolumeGothicWav(FFmpegProcessor ffmpeg, string inputDir, string outputDir, Action<FileInfo> modifyVolumeFunc)
+        public static void IncreaseVolumeGothicWawsMax(FFmpegProcessor ffmpeg, string inputDir, string outputDir,
+            IProgress<ProgressModel> progress = null)
+        {
+            IncreaseVolumeGothicWavs(ffmpeg,inputDir, (fi) => IncreaseVolumeSingleGothicWavMax(ffmpeg, fi, outputDir), progress);
+        }
+
+        public static void IncreaseVolumeGothicWaws(FFmpegProcessor ffmpeg, string inputDir, string outputDir, double dB,
+            IProgress<ProgressModel> progress = null)
+        {
+            IncreaseVolumeGothicWavs(ffmpeg, inputDir, (fi) => IncreaseVolumeSingleGothicWav(ffmpeg, fi, outputDir, dB), progress);
+        }
+
+
+        private static void IncreaseVolumeGothicWavs(FFmpegProcessor ffmpeg, string inputDir,
+            Action<FileInfo> modifyVolumeFunc, IProgress<ProgressModel> progress = null)
         {
             string[] files = Directory.GetFiles(inputDir);
 
@@ -48,8 +63,15 @@ namespace GothicToolsLib.DecibelsModulator
                 }
 
                 modifyVolumeFunc(fi);
+
+                progress?.Report(new ProgressModel()
+                {
+                    Msg = $"Increased file {fi.Name}",
+                    Percent = (int)Math.Floor(((double)i / (double)files.Length) * 100)
+                });
             }
-            
+
+
         }
 
     }

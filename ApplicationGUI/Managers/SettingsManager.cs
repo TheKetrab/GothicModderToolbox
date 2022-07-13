@@ -30,6 +30,11 @@ namespace ApplicationGUI
         public string AT_SpellcheckerDictionaryDir { get; set; }
         #endregion
 
+        #region DecibelsModulator
+        public string DM_FfmpegPath { get; set; }
+        public string DM_InputDir { get; set; }
+        public string DM_OutputDit { get; set; }
+        #endregion
 
         public void UpdateConfigFile()
         {
@@ -58,6 +63,9 @@ namespace ApplicationGUI
 
             AT_SpellcheckerDictionaryDir = data["Paths"]["AT_spellcheckerDictionaryDir"];
 
+            DM_FfmpegPath = data["Paths"]["DM_ffmpegPath"];
+            DM_InputDir = data["Paths"]["DM_inputDirectory"];
+            DM_OutputDit = data["Paths"]["DM_outputDirectory"];
         }
 
 

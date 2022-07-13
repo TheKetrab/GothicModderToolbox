@@ -14,7 +14,7 @@ namespace ApplicationGUI
         private DialogParser dialogParser;
         private ItemParser itemParser;
 
-        public async Task InvokeDialogParser(IProgress<ParserProgressModel> progress)
+        public async Task InvokeDialogParser(IProgress<ProgressModel> progress)
         {
             dialogParser = new DialogParser(
                 SettingsManager.Instance.DC_DialogsPath,
@@ -23,7 +23,7 @@ namespace ApplicationGUI
             await Task.Run(() => dialogParser.Parse(progress));
         }
 
-        public async Task InvokeItemParser(IProgress<ParserProgressModel> progress)
+        public async Task InvokeItemParser(IProgress<ProgressModel> progress)
         {
             itemParser = new ItemParser(
                 SettingsManager.Instance.DC_ItemsDirectory,

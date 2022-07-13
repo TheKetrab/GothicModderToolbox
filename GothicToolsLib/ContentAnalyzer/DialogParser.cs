@@ -223,7 +223,7 @@ namespace GothicToolsLib.ContentAnalyzer
 
         }
 
-        public void Parse(IProgress<ParserProgressModel> progress)
+        public void Parse(IProgress<ProgressModel> progress)
         {
             string[] files = Directory.GetFiles(_scriptsPath, "*.d", SearchOption.AllDirectories);
             long total = files.Sum(x => new FileInfo(x).Length);
@@ -235,7 +235,7 @@ namespace GothicToolsLib.ContentAnalyzer
                 ParseScript(file);
                 done += fi.Length;
 
-                ParserProgressModel progressModel = new()
+                ProgressModel progressModel = new()
                 {
                     File = file,
                     Msg = $"Parsed script: {fi.Name}",
@@ -247,7 +247,7 @@ namespace GothicToolsLib.ContentAnalyzer
 
             ParseTrialogs();
 
-            progress.Report(new ParserProgressModel("Parsed trialogs.",100));
+            progress.Report(new ProgressModel("Parsed trialogs.",100));
 
             Parsed = true;
         }

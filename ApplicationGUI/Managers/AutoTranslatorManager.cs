@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using GothicToolsLib.AutoTranslator;
+using GothicToolsLib.Models;
 
 namespace ApplicationGUI
 {
@@ -11,7 +12,7 @@ namespace ApplicationGUI
     {
         private Translator translator;
 
-        public async Task InvokeTranslator(IProgress<TranslationProgressModel> progress)
+        public async Task InvokeTranslator(IProgress<ProgressModel> progress)
         {
             translator = new Translator(
                 SettingsManager.Instance.AT_TranslateInputPath,
@@ -28,7 +29,7 @@ namespace ApplicationGUI
                    $"Total entries: {translator.TotalLines}";
         }
 
-        public async Task Translate(IProgress<TranslationProgressModel> progress)
+        public async Task Translate(IProgress<ProgressModel> progress)
         {
             if (translator == null)
             {
@@ -43,7 +44,7 @@ namespace ApplicationGUI
             await translator.TranslateAsync(SettingsManager.Instance.AT_ApiKey, progress);
         }
 
-        public async Task Replace(IProgress<TranslationProgressModel> progress)
+        public async Task Replace(IProgress<ProgressModel> progress)
         {
             await translator.ReplaceAsync(progress);
         }

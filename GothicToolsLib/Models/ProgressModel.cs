@@ -6,10 +6,20 @@ using System.Threading.Tasks;
 
 namespace GothicToolsLib.Models
 {
-    public class ParserProgressModel
+    public enum Importance
     {
+        Normal,
+        Warning,
+        Error
+    }
+
+    public class ProgressModel
+    {
+
         public string File { get; set; }
         public string Msg { get; set; }
+        public Importance Importance { get; set; } = Importance.Normal;
+
 
         private int _percent;
         public int Percent { 
@@ -17,12 +27,12 @@ namespace GothicToolsLib.Models
             set => _percent = Math.Max(0, Math.Min(100, value));
         }
 
-        public ParserProgressModel()
+        public ProgressModel()
         {
 
         }
 
-        public ParserProgressModel(string msg, int percent)
+        public ProgressModel(string msg, int percent)
         {
             Msg = msg;
             Percent = percent;

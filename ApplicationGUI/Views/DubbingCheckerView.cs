@@ -60,7 +60,7 @@ namespace ApplicationGUI
                 DC_ProgressBar.Percent = 0;
                 DC_InfoLabel.Text = "Parsing scripts...";
 
-                Progress<ParserProgressModel> progress = new();
+                Progress<ProgressModel> progress = new();
                 progress.ProgressChanged += ProgressOnProgressChanged;
 
                 await dubbingCheckerManager.InvokeDialogParser(progress);
@@ -68,7 +68,7 @@ namespace ApplicationGUI
                 EnableSavingButtons();
 
                 ProgressOnProgressChanged(this,
-                    new ParserProgressModel("Parsing dialogs completed.", 100));
+                    new ProgressModel("Parsing dialogs completed.", 100));
             }
             catch (Exception exc)
             {
@@ -81,7 +81,7 @@ namespace ApplicationGUI
 
         }
 
-        private void ProgressOnProgressChanged(object? sender, ParserProgressModel e)
+        private void ProgressOnProgressChanged(object? sender, ProgressModel e)
         {
             DC_ProgressBar.Percent = e.Percent;
             DC_InfoLabel.AppendText($"{Environment.NewLine}{e.Msg}");
@@ -107,7 +107,7 @@ namespace ApplicationGUI
                 DC_ProgressBar.Percent = 0;
                 DC_InfoLabel.Text = "Parsing items...";
 
-                Progress<ParserProgressModel> progress = new();
+                Progress<ProgressModel> progress = new();
                 progress.ProgressChanged += ProgressOnProgressChanged;
 
                 await dubbingCheckerManager.InvokeItemParser(progress);
@@ -115,7 +115,7 @@ namespace ApplicationGUI
                 EnableSavingButtons();
 
                 ProgressOnProgressChanged(this,
-                    new ParserProgressModel("Parsing items completed.", 100));
+                    new ProgressModel("Parsing items completed.", 100));
             }
             catch (Exception exc)
             {

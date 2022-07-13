@@ -14,15 +14,8 @@ namespace GothicToolsLib.DecibelsModulator
     {
         private string _path;
 
-        public string OutputDir { get; }
-
-        public string InputDir { get; }
-
-        public FFmpegProcessor(string ffmpegPath, string outputDir, string inputDir)
+        public FFmpegProcessor(string ffmpegPath)
         {
-            InputDir = inputDir;
-            OutputDir = outputDir;
-
             _path = ffmpegPath;
             TestFFmpegPath();
         }

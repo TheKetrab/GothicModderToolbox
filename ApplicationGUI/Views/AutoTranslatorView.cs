@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using GothicToolsLib.AutoTranslator;
+using GothicToolsLib.Models;
 
 namespace ApplicationGUI
 {
@@ -36,7 +36,7 @@ namespace ApplicationGUI
 
                 if (MessageBox.Show("Are you sure?", "", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
-                    Progress<TranslationProgressModel> progress = new();
+                    Progress<ProgressModel> progress = new();
                     progress.ProgressChanged += ProgressOnProgressChanged;
 
                     await autoTranslatorManager.Translate(progress);
@@ -62,7 +62,7 @@ namespace ApplicationGUI
                 AT_ProgressBar.Percent = 0;
                 AT_InfoLabel.Text = "Analyzing scripts...";
 
-                Progress<TranslationProgressModel> progress = new();
+                Progress<ProgressModel> progress = new();
                 progress.ProgressChanged += ProgressOnProgressChanged;
 
                 await autoTranslatorManager.InvokeTranslator(progress);
@@ -95,7 +95,7 @@ namespace ApplicationGUI
             AT_ReplaceBtn.Enabled = true;
         }
 
-        private void ProgressOnProgressChanged(object? sender, TranslationProgressModel e)
+        private void ProgressOnProgressChanged(object? sender, ProgressModel e)
         {
             AT_ProgressBar.Percent = e.Percent;
             AT_InfoLabel.AppendText($"{Environment.NewLine}{e.Msg}");
@@ -109,7 +109,7 @@ namespace ApplicationGUI
                 AT_ProgressBar.Percent = 0;
                 AT_InfoLabel.Text = "Replacing scripts...";
 
-                Progress<TranslationProgressModel> progress = new();
+                Progress<ProgressModel> progress = new();
                 progress.ProgressChanged += ProgressOnProgressChanged;
 
                 await autoTranslatorManager.Replace(progress);
@@ -133,7 +133,7 @@ namespace ApplicationGUI
                 AT_ProgressBar.Percent = 0;
                 AT_InfoLabel.Text = "Spellchecking...";
 
-                Progress<TranslationProgressModel> progress = new();
+                Progress<ProgressModel> progress = new();
                 progress.ProgressChanged += ProgressOnProgressChanged;
 
                 var errors = autoTranslatorManager.Spellcheck();

@@ -29,70 +29,113 @@ namespace ApplicationGUI
         /// </summary>
         private void InitializeComponent()
         {
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.DM_FFmpegPath = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.DM_RunBtn = new System.Windows.Forms.Button();
-            this.groupBox2.SuspendLayout();
+            this.DM_ProgressBar = new ApplicationGUI.Controls.AdvancedProgressBar();
+            this.DM_InfoLabel = new System.Windows.Forms.TextBox();
+            this.DM_IncVolumeMaxRadioBtn = new System.Windows.Forms.RadioButton();
+            this.DM_IncVolumeDbRadioBtn = new System.Windows.Forms.RadioButton();
+            this.DM_IncVolumeSlider = new System.Windows.Forms.TrackBar();
+            this.DM_IncVolumeLbl = new System.Windows.Forms.Label();
+            this.DM_IncVolumeBtn = new System.Windows.Forms.Button();
+            ((System.ComponentModel.ISupportInitialize)(this.DM_IncVolumeSlider)).BeginInit();
             this.SuspendLayout();
             // 
-            // groupBox2
+            // DM_ProgressBar
             // 
-            this.groupBox2.Controls.Add(this.DM_FFmpegPath);
-            this.groupBox2.Controls.Add(this.label2);
-            this.groupBox2.Controls.Add(this.DM_RunBtn);
-            this.groupBox2.Location = new System.Drawing.Point(3, 3);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(250, 119);
-            this.groupBox2.TabIndex = 7;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Decibels Modulator";
+            this.DM_ProgressBar.InsideMargin = 3;
+            this.DM_ProgressBar.LabelWidth = 40;
+            this.DM_ProgressBar.Location = new System.Drawing.Point(8, 201);
+            this.DM_ProgressBar.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.DM_ProgressBar.Name = "DM_ProgressBar";
+            this.DM_ProgressBar.Percent = 0;
+            this.DM_ProgressBar.Size = new System.Drawing.Size(626, 34);
+            this.DM_ProgressBar.TabIndex = 29;
             // 
-            // DM_FFmpegPath
+            // DM_InfoLabel
             // 
-            this.DM_FFmpegPath.Location = new System.Drawing.Point(119, 23);
-            this.DM_FFmpegPath.Name = "DM_FFmpegPath";
-            this.DM_FFmpegPath.Size = new System.Drawing.Size(125, 27);
-            this.DM_FFmpegPath.TabIndex = 2;
-            this.DM_FFmpegPath.Text = "ffmpeg.exe";
+            this.DM_InfoLabel.Location = new System.Drawing.Point(8, 125);
+            this.DM_InfoLabel.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.DM_InfoLabel.Multiline = true;
+            this.DM_InfoLabel.Name = "DM_InfoLabel";
+            this.DM_InfoLabel.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.DM_InfoLabel.Size = new System.Drawing.Size(627, 73);
+            this.DM_InfoLabel.TabIndex = 28;
             // 
-            // label2
+            // DM_IncVolumeMaxRadioBtn
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(6, 23);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(99, 20);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "FFmpeg path:";
+            this.DM_IncVolumeMaxRadioBtn.AutoSize = true;
+            this.DM_IncVolumeMaxRadioBtn.Location = new System.Drawing.Point(8, 15);
+            this.DM_IncVolumeMaxRadioBtn.Name = "DM_IncVolumeMaxRadioBtn";
+            this.DM_IncVolumeMaxRadioBtn.Size = new System.Drawing.Size(137, 19);
+            this.DM_IncVolumeMaxRadioBtn.TabIndex = 30;
+            this.DM_IncVolumeMaxRadioBtn.TabStop = true;
+            this.DM_IncVolumeMaxRadioBtn.Text = "Increase volume Max";
+            this.DM_IncVolumeMaxRadioBtn.UseVisualStyleBackColor = true;
             // 
-            // DM_RunBtn
+            // DM_IncVolumeDbRadioBtn
             // 
-            this.DM_RunBtn.Location = new System.Drawing.Point(74, 67);
-            this.DM_RunBtn.Name = "DM_RunBtn";
-            this.DM_RunBtn.Size = new System.Drawing.Size(94, 29);
-            this.DM_RunBtn.TabIndex = 0;
-            this.DM_RunBtn.Text = "Run";
-            this.DM_RunBtn.UseVisualStyleBackColor = true;
+            this.DM_IncVolumeDbRadioBtn.AutoSize = true;
+            this.DM_IncVolumeDbRadioBtn.Location = new System.Drawing.Point(8, 41);
+            this.DM_IncVolumeDbRadioBtn.Name = "DM_IncVolumeDbRadioBtn";
+            this.DM_IncVolumeDbRadioBtn.Size = new System.Drawing.Size(111, 19);
+            this.DM_IncVolumeDbRadioBtn.TabIndex = 31;
+            this.DM_IncVolumeDbRadioBtn.TabStop = true;
+            this.DM_IncVolumeDbRadioBtn.Text = "Increase volume";
+            this.DM_IncVolumeDbRadioBtn.UseVisualStyleBackColor = true;
+            // 
+            // DM_IncVolumeSlider
+            // 
+            this.DM_IncVolumeSlider.Location = new System.Drawing.Point(127, 41);
+            this.DM_IncVolumeSlider.Name = "DM_IncVolumeSlider";
+            this.DM_IncVolumeSlider.Size = new System.Drawing.Size(104, 45);
+            this.DM_IncVolumeSlider.TabIndex = 32;
+            // 
+            // DM_IncVolumeLbl
+            // 
+            this.DM_IncVolumeLbl.AutoSize = true;
+            this.DM_IncVolumeLbl.Location = new System.Drawing.Point(237, 43);
+            this.DM_IncVolumeLbl.Name = "DM_IncVolumeLbl";
+            this.DM_IncVolumeLbl.Size = new System.Drawing.Size(38, 15);
+            this.DM_IncVolumeLbl.TabIndex = 33;
+            this.DM_IncVolumeLbl.Text = "label1";
+            // 
+            // DM_IncVolumeBtn
+            // 
+            this.DM_IncVolumeBtn.Location = new System.Drawing.Point(8, 93);
+            this.DM_IncVolumeBtn.Name = "DM_IncVolumeBtn";
+            this.DM_IncVolumeBtn.Size = new System.Drawing.Size(75, 23);
+            this.DM_IncVolumeBtn.TabIndex = 37;
+            this.DM_IncVolumeBtn.Text = "Start";
+            this.DM_IncVolumeBtn.UseVisualStyleBackColor = true;
+            this.DM_IncVolumeBtn.Click += new System.EventHandler(this.DM_IncVolumeBtn_Click);
             // 
             // DecibelsModulatorView
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.groupBox2);
+            this.Controls.Add(this.DM_IncVolumeBtn);
+            this.Controls.Add(this.DM_IncVolumeLbl);
+            this.Controls.Add(this.DM_IncVolumeSlider);
+            this.Controls.Add(this.DM_IncVolumeDbRadioBtn);
+            this.Controls.Add(this.DM_IncVolumeMaxRadioBtn);
+            this.Controls.Add(this.DM_ProgressBar);
+            this.Controls.Add(this.DM_InfoLabel);
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "DecibelsModulatorView";
-            this.Size = new System.Drawing.Size(421, 226);
-            this.Load += new System.EventHandler(this.DecibelsModulatorView_Load);
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
+            this.Size = new System.Drawing.Size(901, 470);
+            ((System.ComponentModel.ISupportInitialize)(this.DM_IncVolumeSlider)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
 
-        private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.TextBox DM_FFmpegPath;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Button DM_RunBtn;
+        private Controls.AdvancedProgressBar DM_ProgressBar;
+        private System.Windows.Forms.TextBox DM_InfoLabel;
+        private System.Windows.Forms.RadioButton DM_IncVolumeMaxRadioBtn;
+        private System.Windows.Forms.RadioButton DM_IncVolumeDbRadioBtn;
+        private System.Windows.Forms.TrackBar DM_IncVolumeSlider;
+        private System.Windows.Forms.Label DM_IncVolumeLbl;
+        private System.Windows.Forms.Button DM_IncVolumeBtn;
     }
 }

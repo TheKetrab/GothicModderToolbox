@@ -165,14 +165,14 @@ namespace GothicToolsLib.ContentAnalyzer
         }
 
 
-        public void Parse(IProgress<ParserProgressModel> progress)
+        public void Parse(IProgress<ProgressModel> progress)
         {
             const int initPercent = 5;
             const int zensPercent = 20;
             const int scriptsPercent = 100 - initPercent - zensPercent;
 
 
-            progress.Report(new ParserProgressModel(
+            progress.Report(new ProgressModel(
                 $"Found { customItems.Count } items.",initPercent));
 
             string[] scripts = Directory.GetFiles(_lookupDirectory, "*.d", SearchOption.AllDirectories);
@@ -190,7 +190,7 @@ namespace GothicToolsLib.ContentAnalyzer
                 ParseScript(script);
                 done += fi.Length;
 
-                ParserProgressModel progressModel = new()
+                ProgressModel progressModel = new()
                 {
                     File = script,
                     Msg = $"Parsed script: {fi.Name}",
@@ -206,7 +206,7 @@ namespace GothicToolsLib.ContentAnalyzer
                 ParseZEN(zen);
                 doneZens += fi.Length;
 
-                ParserProgressModel progressModel = new()
+                ProgressModel progressModel = new()
                 {
                     File = zen,
                     Msg = $"Parsed ZEN: {fi.Name}",

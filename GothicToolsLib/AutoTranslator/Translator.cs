@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Google.Api.Gax.Grpc;
 using Google.Api.Gax.ResourceNames;
 using Google.Cloud.Translate.V3;
+using GothicToolsLib.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
@@ -98,7 +99,7 @@ namespace GothicToolsLib.AutoTranslator
 
         }
 
-        public async Task AnalyzeAsync(IProgress<TranslationProgressModel> progress = null)
+        public async Task AnalyzeAsync(IProgress<ProgressModel> progress = null)
         {
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
             string[] files = Directory.GetFiles(_inputPath, "*.d", SearchOption.AllDirectories);
@@ -113,7 +114,7 @@ namespace GothicToolsLib.AutoTranslator
 
                 FileInfo fi = new FileInfo(file);
                 dataRead += fi.Length;
-                progress?.Report(new TranslationProgressModel()
+                progress?.Report(new ProgressModel()
                 {
                     Msg = $"Parsed file {fi.Name}",
                     Percent = (int)(dataRead * 100 / totalToRead)
@@ -124,7 +125,7 @@ namespace GothicToolsLib.AutoTranslator
 
         }
 
-        public async Task TranslateAsync(string apiKey, IProgress<TranslationProgressModel> progress = null)
+        public async Task TranslateAsync(string apiKey, IProgress<ProgressModel> progress = null)
         {
             var converter = new ExpandoObjectConverter();
             for (int i=0; i< _entries.Count; i++)
@@ -153,7 +154,7 @@ namespace GothicToolsLib.AutoTranslator
 
                     _entries[i] = entry;
 
-                    progress?.Report(new TranslationProgressModel()
+                    progress?.Report(new ProgressModel()
                     {
                         Percent = (int)(i * 100 / _entries.Count)
                     });
@@ -182,7 +183,7 @@ namespace GothicToolsLib.AutoTranslator
             
         }
 
-        public async Task ReplaceAsync(IProgress<TranslationProgressModel> progress = null)
+        public async Task ReplaceAsync(IProgress<ProgressModel> progress = null)
         {
             var groups = _entries.GroupBy(x => x.File);
             int total = _entries.Count();
@@ -192,7 +193,7 @@ namespace GothicToolsLib.AutoTranslator
                 await Task.Run(() => ReplaceSingleFile(group));
                 done += group.Count();
 
-                progress?.Report(new TranslationProgressModel()
+                progress?.Report(new ProgressModel()
                 {
                     Msg = $"Translated file {group.Key}",
                     Percent = (int)(done * 100 / total)
