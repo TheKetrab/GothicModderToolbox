@@ -12,6 +12,7 @@ using Google.Api.Gax.Grpc;
 using Google.Api.Gax.ResourceNames;
 using Google.Cloud.Translate.V3;
 using GothicToolsLib.Models;
+using GothicToolsLib.Patterns;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
@@ -28,6 +29,8 @@ namespace GothicToolsLib.AutoTranslator
 
     public class Translator
     {
+        private TextPatternsProvider _textPatternsProvider;
+
         private string _inputPath;
         private string _outputPath;
 
@@ -61,11 +64,12 @@ namespace GothicToolsLib.AutoTranslator
 
         private List<ItemData> _entries = new();
 
-        public Translator(string inputPath, string outputPath, int inputEncoding)
+        public Translator(string inputPath, string outputPath, int inputEncoding, TextPatternsProvider provider)
         {
             _inputPath = inputPath;
             _outputPath = outputPath;
             _inputEncoding = inputEncoding;
+            _textPatternsProvider = provider;
         }
 
         public long TotalCharacters => _entries?.Sum(x => x.Text.Length) ?? 0;
@@ -81,7 +85,7 @@ namespace GothicToolsLib.AutoTranslator
             while ((line = sr.ReadLine()) != null)
             {
                 lineNum++;
-                var m = GothicPatterns.MatchAny(line);
+                var m = _textPatternsProvider.MatchAny(line);
                 if (!m.HasValue) continue;
 
                 string text = m.Value.Match.Groups[m.Value.GroupWithText].Value;

@@ -84,7 +84,7 @@ namespace ApplicationGUI
             this.DC_InfoLabel.Name = "DC_InfoLabel";
             this.DC_InfoLabel.ReadOnly = true;
             this.DC_InfoLabel.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.DC_InfoLabel.Size = new System.Drawing.Size(494, 78);
+            this.DC_InfoLabel.Size = new System.Drawing.Size(494, 91);
             this.DC_InfoLabel.TabIndex = 28;
             // 
             // DC_ParseBtn
@@ -139,11 +139,11 @@ namespace ApplicationGUI
             | System.Windows.Forms.AnchorStyles.Right)));
             this.DC_ProgressBar.InsideMargin = 5;
             this.DC_ProgressBar.LabelWidth = 40;
-            this.DC_ProgressBar.Location = new System.Drawing.Point(3, 153);
+            this.DC_ProgressBar.Location = new System.Drawing.Point(3, 168);
             this.DC_ProgressBar.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.DC_ProgressBar.Name = "DC_ProgressBar";
             this.DC_ProgressBar.Percent = 0;
-            this.DC_ProgressBar.Size = new System.Drawing.Size(494, 34);
+            this.DC_ProgressBar.Size = new System.Drawing.Size(494, 30);
             this.DC_ProgressBar.TabIndex = 34;
             // 
             // DubbingCheckerView

@@ -39,31 +39,32 @@ namespace ApplicationGUI
             ((System.ComponentModel.ISupportInitialize)(this.DM_IncVolumeSlider)).BeginInit();
             this.SuspendLayout();
             // 
-            // DM_ProgressBar
+            // DM_AdvancedProgressBar
             // 
             this.DM_AdvancedProgressBar.InsideMargin = 3;
             this.DM_AdvancedProgressBar.LabelWidth = 40;
-            this.DM_AdvancedProgressBar.Location = new System.Drawing.Point(8, 201);
+            this.DM_AdvancedProgressBar.Location = new System.Drawing.Point(3, 168);
             this.DM_AdvancedProgressBar.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.DM_AdvancedProgressBar.Name = "DM_ProgressBar";
+            this.DM_AdvancedProgressBar.Name = "DM_AdvancedProgressBar";
             this.DM_AdvancedProgressBar.Percent = 0;
-            this.DM_AdvancedProgressBar.Size = new System.Drawing.Size(626, 34);
+            this.DM_AdvancedProgressBar.Size = new System.Drawing.Size(494, 30);
             this.DM_AdvancedProgressBar.TabIndex = 29;
             // 
             // DM_InfoLabel
             // 
-            this.DM_InfoLabel.Location = new System.Drawing.Point(8, 125);
+            this.DM_InfoLabel.BackColor = System.Drawing.SystemColors.Control;
+            this.DM_InfoLabel.Location = new System.Drawing.Point(3, 81);
             this.DM_InfoLabel.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.DM_InfoLabel.Multiline = true;
             this.DM_InfoLabel.Name = "DM_InfoLabel";
             this.DM_InfoLabel.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.DM_InfoLabel.Size = new System.Drawing.Size(627, 73);
+            this.DM_InfoLabel.Size = new System.Drawing.Size(494, 83);
             this.DM_InfoLabel.TabIndex = 28;
             // 
             // DM_IncVolumeMaxRadioBtn
             // 
             this.DM_IncVolumeMaxRadioBtn.AutoSize = true;
-            this.DM_IncVolumeMaxRadioBtn.Location = new System.Drawing.Point(8, 15);
+            this.DM_IncVolumeMaxRadioBtn.Location = new System.Drawing.Point(3, 3);
             this.DM_IncVolumeMaxRadioBtn.Name = "DM_IncVolumeMaxRadioBtn";
             this.DM_IncVolumeMaxRadioBtn.Size = new System.Drawing.Size(137, 19);
             this.DM_IncVolumeMaxRadioBtn.TabIndex = 30;
@@ -74,7 +75,7 @@ namespace ApplicationGUI
             // DM_IncVolumeDbRadioBtn
             // 
             this.DM_IncVolumeDbRadioBtn.AutoSize = true;
-            this.DM_IncVolumeDbRadioBtn.Location = new System.Drawing.Point(8, 41);
+            this.DM_IncVolumeDbRadioBtn.Location = new System.Drawing.Point(3, 28);
             this.DM_IncVolumeDbRadioBtn.Name = "DM_IncVolumeDbRadioBtn";
             this.DM_IncVolumeDbRadioBtn.Size = new System.Drawing.Size(111, 19);
             this.DM_IncVolumeDbRadioBtn.TabIndex = 31;
@@ -84,7 +85,7 @@ namespace ApplicationGUI
             // 
             // DM_IncVolumeSlider
             // 
-            this.DM_IncVolumeSlider.Location = new System.Drawing.Point(127, 41);
+            this.DM_IncVolumeSlider.Location = new System.Drawing.Point(120, 28);
             this.DM_IncVolumeSlider.Name = "DM_IncVolumeSlider";
             this.DM_IncVolumeSlider.Size = new System.Drawing.Size(104, 45);
             this.DM_IncVolumeSlider.TabIndex = 32;
@@ -92,7 +93,7 @@ namespace ApplicationGUI
             // DM_IncVolumeLbl
             // 
             this.DM_IncVolumeLbl.AutoSize = true;
-            this.DM_IncVolumeLbl.Location = new System.Drawing.Point(237, 43);
+            this.DM_IncVolumeLbl.Location = new System.Drawing.Point(230, 32);
             this.DM_IncVolumeLbl.Name = "DM_IncVolumeLbl";
             this.DM_IncVolumeLbl.Size = new System.Drawing.Size(38, 15);
             this.DM_IncVolumeLbl.TabIndex = 33;
@@ -100,7 +101,7 @@ namespace ApplicationGUI
             // 
             // DM_IncVolumeBtn
             // 
-            this.DM_IncVolumeBtn.Location = new System.Drawing.Point(8, 93);
+            this.DM_IncVolumeBtn.Location = new System.Drawing.Point(3, 53);
             this.DM_IncVolumeBtn.Name = "DM_IncVolumeBtn";
             this.DM_IncVolumeBtn.Size = new System.Drawing.Size(75, 23);
             this.DM_IncVolumeBtn.TabIndex = 37;
@@ -121,7 +122,7 @@ namespace ApplicationGUI
             this.Controls.Add(this.DM_InfoLabel);
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "DecibelsModulatorView";
-            this.Size = new System.Drawing.Size(901, 470);
+            this.Size = new System.Drawing.Size(500, 200);
             ((System.ComponentModel.ISupportInitialize)(this.DM_IncVolumeSlider)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

@@ -36,6 +36,33 @@ namespace ApplicationGUI
         public string DM_OutputDit { get; set; }
         #endregion
 
+        #region CustomPatterns
+
+        public bool CP_Enabled { get; set; }
+        public string CP_Text_AiOutput { get; set; }
+        public string CP_Text_DocPrintLines { get; set; }
+        public string CP_Text_BLogEntry { get; set; }
+        public string CP_Text_Name { get; set; }
+        public string CP_Text_Description { get; set; }
+        public string CP_Text_Text { get; set; }
+        public string CP_Text_AddChoice { get; set; }
+
+        public string CP_Dubbing_OutputOther { get; set; }
+        public string CP_Dubbing_OutputSelf { get; set; }
+        public string CP_Dubbing_OutputAtypical { get; set; }
+        public string CP_Dubbing_TrialogStart { get; set; }
+        public string CP_Dubbing_TrialogFinish { get; set; }
+        public string CP_Dubbing_TrialogNext { get; set; }
+        public string CP_Dubbing_DiaFileName { get; set; }
+
+
+        public string CP_Item_InstanceItem { get; set; }
+        public string CP_Item_ZenVobName { get; set; }
+        public string CP_Item_ZenItemInstance { get; set; }
+        public string CP_Item_ZenContains { get; set; }
+
+        #endregion
+
         public void UpdateConfigFile()
         {
             // TODO

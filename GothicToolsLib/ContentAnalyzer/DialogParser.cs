@@ -6,12 +6,15 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Text.RegularExpressions;
 using GothicToolsLib.Models;
+using GothicToolsLib.Patterns;
 using Match = System.Text.RegularExpressions.Match;
 
 namespace GothicToolsLib.ContentAnalyzer
 {
     public class DialogParser
     {
+        private DubbingPatternsProvider _dubbingPP;
+
         public bool Parsed { get; private set; }
         private struct TrialogData
         {
@@ -58,12 +61,13 @@ namespace GothicToolsLib.ContentAnalyzer
             }
         }
 
-        public DialogParser(string scriptsPath, string dubbingPath)
+        public DialogParser(string scriptsPath, string dubbingPath, DubbingPatternsProvider provider)
         {
             ValidatePaths(scriptsPath, dubbingPath);
 
             _scriptsPath = scriptsPath;
             _dubbingPath = dubbingPath;
+            _dubbingPP = provider;
 
             InitWavNames();
         }
@@ -78,7 +82,7 @@ namespace GothicToolsLib.ContentAnalyzer
 
         private void ParseHeroLine(string line,string filename)
         {
-            Match match = Regex.Match(line, GothicPatterns.OutputOther, RegexOpt);
+            Match match = Regex.Match(line, _dubbingPP.OutputOther, RegexOpt);
 
             string instance = match.Groups[2].Value;
 
@@ -93,7 +97,7 @@ namespace GothicToolsLib.ContentAnalyzer
 
         private void ParseNpcLine(string line, string file, string trialogName="")
         {
-            Match match = Regex.Match(line, GothicPatterns.OutputSelf, RegexOpt);
+            Match match = Regex.Match(line, _dubbingPP.OutputSelf, RegexOpt);
 
             string instance = match.Groups[2].Value;
             string filename = new FileInfo(file).Name;
@@ -110,9 +114,9 @@ namespace GothicToolsLib.ContentAnalyzer
                     Npcs[id].Missing.Add(aio);
 
             }
-            else if (Regex.IsMatch(filename, GothicPatterns.DiaFileName, RegexOpt))
+            else if (Regex.IsMatch(filename, _dubbingPP.DiaFileName, RegexOpt))
             {
-                Match matchFileName = Regex.Match(filename, GothicPatterns.DiaFileName, RegexOpt);
+                Match matchFileName = Regex.Match(filename, _dubbingPP.DiaFileName, RegexOpt);
 
                 int id = Int32.Parse(matchFileName.Groups[2].Value);
                 string name = matchFileName.Groups[3].Value;
@@ -140,7 +144,7 @@ namespace GothicToolsLib.ContentAnalyzer
 
         private void ParseAtypicalLine(string line, string filename)
         {
-            Match match = Regex.Match(line, GothicPatterns.OutputAtypical, RegexOpt);
+            Match match = Regex.Match(line, _dubbingPP.OutputAtypical, RegexOpt);
 
             string instance = match.Groups[1].Value;
             string text = match.Groups[2].Value;
@@ -165,12 +169,12 @@ namespace GothicToolsLib.ContentAnalyzer
             string line;
             while ((line = sr.ReadLine()) != null)
             {
-                if (Regex.IsMatch(line, GothicPatterns.OutputOther, RegexOpt))
+                if (Regex.IsMatch(line, _dubbingPP.OutputOther, RegexOpt))
                 {
                     ParseHeroLine(line,file);
                 }
 
-                else if (Regex.IsMatch(line, GothicPatterns.OutputSelf, RegexOpt))
+                else if (Regex.IsMatch(line, _dubbingPP.OutputSelf, RegexOpt))
                 {
                     if (trialogMode)
                     {
@@ -187,25 +191,25 @@ namespace GothicToolsLib.ContentAnalyzer
                     }
                 }
 
-                else if (Regex.IsMatch(line, GothicPatterns.OutputAtypical, RegexOpt))
+                else if (Regex.IsMatch(line, _dubbingPP.OutputAtypical, RegexOpt))
                 {
                     ParseAtypicalLine(line, file);
                 }
 
-                else if (Regex.IsMatch(line, GothicPatterns.TrialogStart, RegexOpt))
+                else if (Regex.IsMatch(line, _dubbingPP.TrialogStart, RegexOpt))
                 {
                     trialogMode = true;
                 }
 
-                else if (Regex.IsMatch(line, GothicPatterns.TrialogFinish, RegexOpt))
+                else if (Regex.IsMatch(line, _dubbingPP.TrialogFinish, RegexOpt))
                 {
                     trialogMode = false;
                 }
 
-                else if (Regex.IsMatch(line, GothicPatterns.TrialogNext, RegexOpt))
+                else if (Regex.IsMatch(line, _dubbingPP.TrialogNext, RegexOpt))
                 {
                     if (!trialogMode) continue;
-                    Match match = Regex.Match(line, GothicPatterns.TrialogNext, RegexOpt);
+                    Match match = Regex.Match(line, _dubbingPP.TrialogNext, RegexOpt);
                     trialogFakeName = match.Groups[1].Value;
                 }
 

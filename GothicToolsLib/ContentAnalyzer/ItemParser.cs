@@ -6,11 +6,15 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using GothicToolsLib.Models;
+using GothicToolsLib.Patterns;
 
 namespace GothicToolsLib.ContentAnalyzer
 {
     public class ItemParser
     {
+
+        private ItemPatternsProvider _itemPP;
+
         public bool Parsed { get; private set; }
         public event EventHandler<string> ParsingScriptEvt;
         public Dictionary<string, int> AllItems = new();
@@ -23,10 +27,11 @@ namespace GothicToolsLib.ContentAnalyzer
         private string _itemsPath;
         private string _lookupDirectory;
 
-        public ItemParser(string itemsPath, string lookupDirectory)
+        public ItemParser(string itemsPath, string lookupDirectory, ItemPatternsProvider provider)
         {
             _itemsPath = itemsPath;
             _lookupDirectory = lookupDirectory;
+            _itemPP = provider;
 
             InitCustomItems();
         }
@@ -40,9 +45,9 @@ namespace GothicToolsLib.ContentAnalyzer
             string line;
             while ((line = sr.ReadLine()) != null)
             {
-                if (Regex.IsMatch(line, GothicPatterns.InstanceItem, RegexOpt))
+                if (Regex.IsMatch(line, _itemPP.InstanceItem, RegexOpt))
                 {
-                    Match match = Regex.Match(line, GothicPatterns.InstanceItem, RegexOpt);
+                    Match match = Regex.Match(line, _itemPP.InstanceItem, RegexOpt);
                     string itemInstance = match.Groups[1].Value.Trim();
                     result.Add(itemInstance);
                 }
@@ -73,7 +78,7 @@ namespace GothicToolsLib.ContentAnalyzer
 
         private void ParseZenContains(string line)
         {
-            Match match = Regex.Match(line, GothicPatterns.ZenContains, RegexOpt);
+            Match match = Regex.Match(line, _itemPP.ZenContains, RegexOpt);
 
             string[] instances = match.Groups[1].Value.Split(',');
 
@@ -114,7 +119,7 @@ namespace GothicToolsLib.ContentAnalyzer
 
         private void ParseZenItemInstance(string line)
         {
-            Match match = Regex.Match(line, GothicPatterns.ZenItemInstance, RegexOpt);
+            Match match = Regex.Match(line, _itemPP.ZenItemInstance, RegexOpt);
 
             string instance = match.Groups[1].Value;
 
@@ -131,12 +136,12 @@ namespace GothicToolsLib.ContentAnalyzer
             string line;
             while ((line = sr.ReadLine()) != null)
             {
-                if (Regex.IsMatch(line, GothicPatterns.ZenContains, RegexOpt))
+                if (Regex.IsMatch(line, _itemPP.ZenContains, RegexOpt))
                 {
                     ParseZenContains(line);
                 }
 
-                else if (Regex.IsMatch(line, GothicPatterns.ZenItemInstance, RegexOpt))
+                else if (Regex.IsMatch(line, _itemPP.ZenItemInstance, RegexOpt))
                 {
                     ParseZenItemInstance(line);
                 }

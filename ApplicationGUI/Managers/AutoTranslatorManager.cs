@@ -4,8 +4,10 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ApplicationGUI.Managers;
 using GothicToolsLib.AutoTranslator;
 using GothicToolsLib.Models;
+using GothicToolsLib.Patterns;
 
 namespace ApplicationGUI
 {
@@ -15,10 +17,16 @@ namespace ApplicationGUI
 
         public async Task InvokeTranslator(IProgress<ProgressModel> progress)
         {
+            TextPatternsProvider patternsProvider =
+                (SettingsManager.Instance.CP_Enabled)
+                    ? new SettingsTextPatternsProvider()
+                    : new TextPatternsProvider();
+
             translator = new Translator(
                 SettingsManager.Instance.AT_TranslateInputPath,
                 SettingsManager.Instance.AT_TranslateOutputPath,
-                SettingsManager.Instance.AT_Encoding);
+                SettingsManager.Instance.AT_Encoding,
+                patternsProvider);
 
             await translator.AnalyzeAsync(progress);
 
@@ -26,7 +34,7 @@ namespace ApplicationGUI
 
         public string GetSummary()
         {
-            return $"Total characters: {translator.TotalCharacters}{Environment.NewLine}" +
+            return $"Total chars: {translator.TotalCharacters}{Environment.NewLine}" +
                    $"Total entries: {translator.TotalLines}";
         }
 

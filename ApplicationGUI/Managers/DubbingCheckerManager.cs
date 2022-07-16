@@ -4,8 +4,10 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ApplicationGUI.Managers;
 using GothicToolsLib.ContentAnalyzer;
 using GothicToolsLib.Models;
+using GothicToolsLib.Patterns;
 
 namespace ApplicationGUI
 {
@@ -16,18 +18,32 @@ namespace ApplicationGUI
 
         public async Task InvokeDialogParser(IProgress<ProgressModel> progress)
         {
+            DubbingPatternsProvider patternsProvider =
+                (SettingsManager.Instance.CP_Enabled)
+                    ? new SettingsDubbingPatternsProvider()
+                    : new DubbingPatternsProvider();
+
+
             dialogParser = new DialogParser(
                 SettingsManager.Instance.DC_DialogsPath,
-                SettingsManager.Instance.DC_DubbingPath);
+                SettingsManager.Instance.DC_DubbingPath,
+                patternsProvider);
 
             await Task.Run(() => dialogParser.Parse(progress));
         }
 
         public async Task InvokeItemParser(IProgress<ProgressModel> progress)
         {
+            ItemPatternsProvider patternsProvider =
+                (SettingsManager.Instance.CP_Enabled)
+                    ? new SettingsItemPatternsProvider()
+                    : new ItemPatternsProvider();
+
+
             itemParser = new ItemParser(
                 SettingsManager.Instance.DC_ItemsDirectory,
-                SettingsManager.Instance.DC_ItemsLookupDirectory);
+                SettingsManager.Instance.DC_ItemsLookupDirectory,
+                patternsProvider);
             
             await Task.Run(() => itemParser.Parse(progress));
         }
