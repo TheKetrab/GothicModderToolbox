@@ -28,7 +28,7 @@ namespace ApplicationGUI
         }
 
         protected override AdvancedProgressBar ProgressBar => DM_AdvancedProgressBar;
-        protected override TextBox InfoLabel => DM_InfoLabel;
+        protected override ReadOnlyRichTextBox InfoLabel => DM_InfoLabel;
 
         protected override void DisableButtons()
         {

@@ -30,7 +30,7 @@ namespace ApplicationGUI
         private void InitializeComponent()
         {
             this.AT_SpellcheckerBtn = new System.Windows.Forms.Button();
-            this.AT_InfoLabel = new System.Windows.Forms.TextBox();
+            this.AT_InfoLabel = new ApplicationGUI.Controls.ReadOnlyRichTextBox();
             this.AT_ReplaceBtn = new System.Windows.Forms.Button();
             this.AT_AnalyzeBtn = new System.Windows.Forms.Button();
             this.AT_TranslateBtn = new System.Windows.Forms.Button();
@@ -62,7 +62,7 @@ namespace ApplicationGUI
             this.AT_InfoLabel.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.AT_InfoLabel.Multiline = true;
             this.AT_InfoLabel.Name = "AT_InfoLabel";
-            this.AT_InfoLabel.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.AT_InfoLabel.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
             this.AT_InfoLabel.Size = new System.Drawing.Size(494, 100);
             this.AT_InfoLabel.TabIndex = 24;
             // 
@@ -213,7 +213,7 @@ namespace ApplicationGUI
         #endregion
 
         private System.Windows.Forms.Button AT_SpellcheckerBtn;
-        private System.Windows.Forms.TextBox AT_InfoLabel;
+        private ApplicationGUI.Controls.ReadOnlyRichTextBox AT_InfoLabel;
         private System.Windows.Forms.Button AT_ReplaceBtn;
         private System.Windows.Forms.Button AT_AnalyzeBtn;
         private System.Windows.Forms.Button AT_TranslateBtn;

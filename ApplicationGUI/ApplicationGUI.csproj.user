@@ -7,6 +7,9 @@
     <Compile Update="Controls\AdvancedProgressBar.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Update="Controls\ReadOnlyRichTextBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Update="Views\AutoTranslatorView.cs">
       <SubType>UserControl</SubType>
     </Compile>

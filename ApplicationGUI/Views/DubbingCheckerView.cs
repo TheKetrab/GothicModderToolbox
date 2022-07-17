@@ -23,7 +23,7 @@ namespace ApplicationGUI
             InitializeComponent();
         }
 
-        protected override TextBox InfoLabel => DC_InfoLabel;
+        protected override ReadOnlyRichTextBox InfoLabel => DC_InfoLabel;
         protected override AdvancedProgressBar ProgressBar => DC_ProgressBar;
 
         protected override void DisableButtons()

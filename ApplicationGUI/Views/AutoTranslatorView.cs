@@ -22,7 +22,7 @@ namespace ApplicationGUI
             InitializeComponent();
         }
 
-        protected override TextBox InfoLabel => AT_InfoLabel;
+        protected override ReadOnlyRichTextBox InfoLabel => AT_InfoLabel;
         protected override AdvancedProgressBar ProgressBar => AT_ProgressBar;
 
         private async void AT_TranslateBtn_Click(object sender, EventArgs e)

@@ -30,7 +30,7 @@ namespace ApplicationGUI
         private void InitializeComponent()
         {
             this.DM_AdvancedProgressBar = new ApplicationGUI.Controls.AdvancedProgressBar();
-            this.DM_InfoLabel = new System.Windows.Forms.TextBox();
+            this.DM_InfoLabel = new ApplicationGUI.Controls.ReadOnlyRichTextBox();
             this.DM_IncVolumeMaxRadioBtn = new System.Windows.Forms.RadioButton();
             this.DM_IncVolumeDbRadioBtn = new System.Windows.Forms.RadioButton();
             this.DM_IncVolumeSlider = new System.Windows.Forms.TrackBar();
@@ -61,7 +61,7 @@ namespace ApplicationGUI
             this.DM_InfoLabel.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.DM_InfoLabel.Multiline = true;
             this.DM_InfoLabel.Name = "DM_InfoLabel";
-            this.DM_InfoLabel.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.DM_InfoLabel.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
             this.DM_InfoLabel.Size = new System.Drawing.Size(494, 83);
             this.DM_InfoLabel.TabIndex = 28;
             // 
@@ -173,7 +173,7 @@ namespace ApplicationGUI
         private System.Windows.Forms.TrackBar DM_IncVolumeSlider;
         private System.Windows.Forms.Label DM_IncVolumeLbl;
         private System.Windows.Forms.Button DM_IncVolumeBtn;
-        private System.Windows.Forms.TextBox DM_InfoLabel;
+        private ApplicationGUI.Controls.ReadOnlyRichTextBox DM_InfoLabel;
         private ApplicationGUI.Controls.AdvancedProgressBar DM_AdvancedProgressBar;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Button DM_WavBtn;

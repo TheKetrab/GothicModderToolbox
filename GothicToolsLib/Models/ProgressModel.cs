@@ -10,7 +10,8 @@ namespace GothicToolsLib.Models
     {
         Normal,
         Warning,
-        Error
+        Error,
+        Bold
     }
 
     public class ProgressModel

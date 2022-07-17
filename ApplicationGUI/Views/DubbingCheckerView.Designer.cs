@@ -32,7 +32,7 @@ namespace ApplicationGUI
             this.DC_ParseItemsBtn = new System.Windows.Forms.Button();
             this.DC_ExcelBtn = new System.Windows.Forms.Button();
             this.DC_SaveBtn = new System.Windows.Forms.Button();
-            this.DC_InfoLabel = new System.Windows.Forms.TextBox();
+            this.DC_InfoLabel = new ApplicationGUI.Controls.ReadOnlyRichTextBox();
             this.DC_ParseBtn = new System.Windows.Forms.Button();
             this.DC_OptionsGroupbox = new System.Windows.Forms.GroupBox();
             this.DC_HideCompleted = new System.Windows.Forms.CheckBox();
@@ -83,7 +83,7 @@ namespace ApplicationGUI
             this.DC_InfoLabel.Multiline = true;
             this.DC_InfoLabel.Name = "DC_InfoLabel";
             this.DC_InfoLabel.ReadOnly = true;
-            this.DC_InfoLabel.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.DC_InfoLabel.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Both;
             this.DC_InfoLabel.Size = new System.Drawing.Size(494, 91);
             this.DC_InfoLabel.TabIndex = 28;
             // 
@@ -171,7 +171,7 @@ namespace ApplicationGUI
         private System.Windows.Forms.Button DC_ParseItemsBtn;
         private System.Windows.Forms.Button DC_ExcelBtn;
         private System.Windows.Forms.Button DC_SaveBtn;
-        private System.Windows.Forms.TextBox DC_InfoLabel;
+        private ApplicationGUI.Controls.ReadOnlyRichTextBox DC_InfoLabel;
         private System.Windows.Forms.Button DC_ParseBtn;
         private System.Windows.Forms.GroupBox DC_OptionsGroupbox;
         private System.Windows.Forms.CheckBox DC_HideCompleted;

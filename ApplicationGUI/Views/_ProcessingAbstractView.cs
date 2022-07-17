@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -12,17 +13,8 @@ namespace ApplicationGUI
 {
     public class ProcessingAbstractView : UserControl
     {
-        protected virtual TextBox InfoLabel { get; } = new();
+        protected virtual ReadOnlyRichTextBox InfoLabel { get; } = new();
         protected virtual AdvancedProgressBar ProgressBar { get; } = new();
-
-        [DllImport("user32.dll")]
-        static extern bool HideCaret(IntPtr hWnd);
-
-        protected override void OnCreateControl()
-        {
-            base.OnCreateControl();
-            InfoLabel.GotFocus += (s1, e1) => { HideCaret(InfoLabel.Handle); };
-        }
 
         protected virtual void DisableButtons()
         {
@@ -32,11 +24,26 @@ namespace ApplicationGUI
         {
         }
 
+
+        
+
         private void ProgressOnProgressChanged(object? sender, ProgressModel e)
         {
             ProgressBar.Percent = e.Percent;
-            if (!string.IsNullOrEmpty(e.Msg))
-                InfoLabel.AppendText($"{Environment.NewLine}{e.Msg}");
+            if (string.IsNullOrEmpty(e.Msg))
+                return;
+
+            Color color = e.Importance switch
+            {
+                Importance.Error => Color.Red,
+                Importance.Normal => Color.Black,
+                Importance.Warning => Color.Orange,
+                _ => Color.Black
+            };
+
+            bool bold = e.Importance == Importance.Bold;
+
+            InfoLabel.AppendFormattedText($"{Environment.NewLine}{e.Msg}", color, bold);
         }
 
         protected async Task Process(string beginMsg, string endMsg, Func<Progress<ProgressModel>, Task> action)
@@ -46,14 +53,15 @@ namespace ApplicationGUI
                 DisableButtons();
 
                 ProgressBar.Percent = 0;
-                InfoLabel.Text = beginMsg;
+                string newline = string.IsNullOrEmpty(InfoLabel.Text) ? "" : Environment.NewLine + Environment.NewLine;
+                InfoLabel.AppendFormattedText($"{newline}{beginMsg}",Color.Black,true);
 
                 Progress<ProgressModel> progress = new();
                 progress.ProgressChanged += ProgressOnProgressChanged;
 
                 await action(progress);
 
-                ProgressOnProgressChanged(this, new ProgressModel(endMsg, 100));
+                ProgressOnProgressChanged(this, new ProgressModel(endMsg, 100) { Importance = Importance.Bold});
             }
             catch (Exception exc)
             {
