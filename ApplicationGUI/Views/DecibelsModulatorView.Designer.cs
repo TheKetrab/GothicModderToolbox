@@ -36,7 +36,11 @@ namespace ApplicationGUI
             this.DM_IncVolumeSlider = new System.Windows.Forms.TrackBar();
             this.DM_IncVolumeLbl = new System.Windows.Forms.Label();
             this.DM_IncVolumeBtn = new System.Windows.Forms.Button();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.DM_Mp3Btn = new System.Windows.Forms.Button();
+            this.DM_WavBtn = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.DM_IncVolumeSlider)).BeginInit();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // DM_AdvancedProgressBar
@@ -109,10 +113,42 @@ namespace ApplicationGUI
             this.DM_IncVolumeBtn.UseVisualStyleBackColor = true;
             this.DM_IncVolumeBtn.Click += new System.EventHandler(this.DM_IncVolumeBtn_Click);
             // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.DM_WavBtn);
+            this.groupBox1.Controls.Add(this.DM_Mp3Btn);
+            this.groupBox1.Location = new System.Drawing.Point(301, 6);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(196, 67);
+            this.groupBox1.TabIndex = 38;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Conversion";
+            // 
+            // DM_Mp3Btn
+            // 
+            this.DM_Mp3Btn.Location = new System.Drawing.Point(16, 26);
+            this.DM_Mp3Btn.Name = "DM_Mp3Btn";
+            this.DM_Mp3Btn.Size = new System.Drawing.Size(75, 23);
+            this.DM_Mp3Btn.TabIndex = 0;
+            this.DM_Mp3Btn.Text = "To mp3";
+            this.DM_Mp3Btn.UseVisualStyleBackColor = true;
+            this.DM_Mp3Btn.Click += new System.EventHandler(this.DM_Mp3Btn_Click);
+            // 
+            // DM_WavBtn
+            // 
+            this.DM_WavBtn.Location = new System.Drawing.Point(97, 26);
+            this.DM_WavBtn.Name = "DM_WavBtn";
+            this.DM_WavBtn.Size = new System.Drawing.Size(75, 23);
+            this.DM_WavBtn.TabIndex = 1;
+            this.DM_WavBtn.Text = "To wav";
+            this.DM_WavBtn.UseVisualStyleBackColor = true;
+            this.DM_WavBtn.Click += new System.EventHandler(this.DM_WavBtn_Click);
+            // 
             // DecibelsModulatorView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.DM_IncVolumeBtn);
             this.Controls.Add(this.DM_IncVolumeLbl);
             this.Controls.Add(this.DM_IncVolumeSlider);
@@ -124,6 +160,7 @@ namespace ApplicationGUI
             this.Name = "DecibelsModulatorView";
             this.Size = new System.Drawing.Size(500, 200);
             ((System.ComponentModel.ISupportInitialize)(this.DM_IncVolumeSlider)).EndInit();
+            this.groupBox1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -138,5 +175,8 @@ namespace ApplicationGUI
         private System.Windows.Forms.Button DM_IncVolumeBtn;
         private System.Windows.Forms.TextBox DM_InfoLabel;
         private ApplicationGUI.Controls.AdvancedProgressBar DM_AdvancedProgressBar;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Button DM_WavBtn;
+        private System.Windows.Forms.Button DM_Mp3Btn;
     }
 }

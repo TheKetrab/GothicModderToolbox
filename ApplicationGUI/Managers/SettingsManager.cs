@@ -33,7 +33,7 @@ namespace ApplicationGUI
         #region DecibelsModulator
         public string DM_FfmpegPath { get; set; }
         public string DM_InputDir { get; set; }
-        public string DM_OutputDit { get; set; }
+        public string DM_OutputDir { get; set; }
         #endregion
 
         #region CustomPatterns
@@ -92,7 +92,7 @@ namespace ApplicationGUI
 
             DM_FfmpegPath = data["Paths"]["DM_ffmpegPath"];
             DM_InputDir = data["Paths"]["DM_inputDirectory"];
-            DM_OutputDit = data["Paths"]["DM_outputDirectory"];
+            DM_OutputDir = data["Paths"]["DM_outputDirectory"];
         }
 
 

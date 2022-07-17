@@ -22,7 +22,7 @@ namespace ApplicationGUI.Managers
             ffmpeg = new FFmpegProcessor(SettingsManager.Instance.DM_FfmpegPath);
 
             await Task.Run(() => VolumeModifier.IncreaseVolumeGothicWawsMax(ffmpeg,
-                SettingsManager.Instance.DM_InputDir, SettingsManager.Instance.DM_OutputDit, progress));
+                SettingsManager.Instance.DM_InputDir, SettingsManager.Instance.DM_OutputDir, progress));
         }
 
         public async Task IncreaseVolumeAsync(double dB, IProgress<ProgressModel> progress)
@@ -30,7 +30,25 @@ namespace ApplicationGUI.Managers
             ffmpeg = new FFmpegProcessor(SettingsManager.Instance.DM_FfmpegPath);
 
             await Task.Run(() => VolumeModifier.IncreaseVolumeGothicWaws(ffmpeg,
-                SettingsManager.Instance.DM_InputDir, SettingsManager.Instance.DM_OutputDit, dB, progress));
+                SettingsManager.Instance.DM_InputDir, SettingsManager.Instance.DM_OutputDir, dB, progress));
+        }
+
+        public async Task ConvertToMp3(IProgress<ProgressModel> progress)
+        {
+            ffmpeg = new FFmpegProcessor(SettingsManager.Instance.DM_FfmpegPath);
+
+            await Task.Run(() => Converter.ToMp3Pararell(ffmpeg,
+                SettingsManager.Instance.DM_InputDir,
+                SettingsManager.Instance.DM_OutputDir));
+        }
+
+        public async Task ConvertToWav(IProgress<ProgressModel> progress)
+        {
+            ffmpeg = new FFmpegProcessor(SettingsManager.Instance.DM_FfmpegPath);
+
+            await Task.Run(() => Converter.ToWavPararell(ffmpeg,
+                SettingsManager.Instance.DM_InputDir,
+                SettingsManager.Instance.DM_OutputDir));
         }
 
 

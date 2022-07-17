@@ -56,5 +56,21 @@ namespace ApplicationGUI
             });
             
         }
+
+        private async void DM_Mp3Btn_Click(object sender, EventArgs e)
+        {
+            await Process("Conversion to mp3.", "Conversion done.", async (progress) =>
+            {
+                await decibelsModulatorManager.ConvertToMp3(progress);
+            });
+        }
+
+        private async void DM_WavBtn_Click(object sender, EventArgs e)
+        {
+            await Process("Conversion to wav.", "Conversion done.", async (progress) =>
+            {
+                await decibelsModulatorManager.ConvertToWav(progress);
+            });
+        }
     }
 }
