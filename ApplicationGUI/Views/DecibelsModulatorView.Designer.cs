@@ -47,6 +47,8 @@ namespace ApplicationGUI
             // 
             // DM_AdvancedProgressBar
             // 
+            this.DM_AdvancedProgressBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.DM_AdvancedProgressBar.InsideMargin = 3;
             this.DM_AdvancedProgressBar.LabelWidth = 40;
             this.DM_AdvancedProgressBar.Location = new System.Drawing.Point(3, 168);
@@ -58,6 +60,9 @@ namespace ApplicationGUI
             // 
             // DM_InfoLabel
             // 
+            this.DM_InfoLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.DM_InfoLabel.BackColor = System.Drawing.SystemColors.Control;
             this.DM_InfoLabel.Location = new System.Drawing.Point(3, 81);
             this.DM_InfoLabel.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);

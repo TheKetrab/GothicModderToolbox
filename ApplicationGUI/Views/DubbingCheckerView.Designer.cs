@@ -80,12 +80,10 @@ namespace ApplicationGUI
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.DC_InfoLabel.Location = new System.Drawing.Point(3, 72);
-            this.DC_InfoLabel.Multiline = true;
             this.DC_InfoLabel.Name = "DC_InfoLabel";
-            this.DC_InfoLabel.ReadOnly = true;
-            this.DC_InfoLabel.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Both;
             this.DC_InfoLabel.Size = new System.Drawing.Size(494, 91);
             this.DC_InfoLabel.TabIndex = 28;
+            this.DC_InfoLabel.Text = "";
             // 
             // DC_ParseBtn
             // 
@@ -163,7 +161,6 @@ namespace ApplicationGUI
             this.DC_OptionsGroupbox.ResumeLayout(false);
             this.DC_OptionsGroupbox.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
