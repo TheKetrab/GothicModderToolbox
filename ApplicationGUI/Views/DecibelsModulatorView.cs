@@ -18,14 +18,36 @@ namespace ApplicationGUI
     {
         private DecibelsModulatorManager decibelsModulatorManager = new DecibelsModulatorManager();
 
-        [DllImport("user32.dll")]
-        static extern bool HideCaret(IntPtr hWnd);
-
         public DecibelsModulatorView()
         {
             InitializeComponent();
-            //DM_InfoLabel.GotFocus += (s1, e1) => { HideCaret(DM_InfoLabel.Handle); };
+            InitializeBindings();
         }
+
+
+        private void InitializeBindings()
+        {
+            DM_IncVolumeSlider.DataBindings.Add("Enabled", DM_IncVolumeDbRadioBtn, "Checked");
+            DM_IncVolumeLbl.DataBindings.Add("Enabled", DM_IncVolumeDbRadioBtn, "Checked");
+
+
+            // Bind Label With Slider
+
+            Binding bindLblSlider = new Binding("Text", DM_IncVolumeSlider, "Value");
+            bindLblSlider.Format += (sender, args) =>
+            {
+                if (int.TryParse(args.Value.ToString(), out int v))
+                {
+                    v -= 5;
+                    char sign = v >= 0 ? '+' : '-';
+                    args.Value = $"{sign}{Math.Abs(v)} dB";
+                }
+            };
+
+            DM_IncVolumeLbl.DataBindings.Add(bindLblSlider);
+
+        }
+
 
         protected override AdvancedProgressBar ProgressBar => DM_AdvancedProgressBar;
         protected override ReadOnlyRichTextBox InfoLabel => DM_InfoLabel;

@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using ApplicationGUI.Controls;
@@ -20,7 +21,84 @@ namespace ApplicationGUI
         public AutoTranslatorView()
         {
             InitializeComponent();
+            InitializeBindings();
         }
+
+        private void InitializeBindings()
+        {
+            BindLangComboAndText(AT_SrcLangCombo,AT_SrcLangText);
+            BindLangComboAndText(AT_DstLangCombo,AT_DstLangText);
+        }
+
+        private void BindLangComboAndText(ComboBox combo, TextBox textBox)
+        {
+            // Bind Text With Combo
+
+            Binding bindLangTextCombo = new Binding("Text", combo, "Text");
+            bindLangTextCombo.Format += (sender, args) =>
+            {
+                string shortcut = GetLangShortcut(args.Value.ToString());
+                if (shortcut == "Other")
+                {
+                    // don't update text
+                    args.Value = ((Binding)sender).Control.Text;
+                }
+
+                else if (shortcut != "")
+                    args.Value = shortcut;
+            };
+
+            textBox.DataBindings.Add(bindLangTextCombo);
+
+            // Bind Combo With Text
+
+            textBox.Leave += (sender, args) =>
+            {
+                int i = GetIndexOfItemWithShortcut(combo, textBox.Text);
+                combo.SelectedIndex = i;
+            };
+
+        }
+
+        private string GetLangShortcut(string langWithShortcut)
+        {
+            if (string.IsNullOrEmpty(langWithShortcut))
+                return "";
+
+            if (langWithShortcut == "Other")
+                return "Other";
+            
+            Regex reg = new Regex(@"^.*\((.+)\)$");
+            Match m = reg.Match(langWithShortcut);
+            if (m.Groups.Count >= 2)
+            {
+                return m.Groups[1].Value;
+            }
+
+            return "";
+        }
+
+        private int GetIndexOfItemWithShortcut(ComboBox combo, string shortcut)
+        {
+            // Select item with shortcut
+            for (int i = 0; i < combo.Items.Count; i++)
+            {
+                string x = combo.Items[i].ToString();
+                if (combo.Items[i].ToString().Contains($"({shortcut})"))
+                    return i;
+            }
+
+            // Select item with 'Other'
+            for (int i = 0; i < combo.Items.Count; i++)
+            {
+                if (combo.Items[i].ToString().Equals("Other"))
+                    return i;
+            }
+
+            // Select nothing, error
+            return -1;
+        }
+
 
         protected override ReadOnlyRichTextBox InfoLabel => AT_InfoLabel;
         protected override AdvancedProgressBar ProgressBar => AT_ProgressBar;

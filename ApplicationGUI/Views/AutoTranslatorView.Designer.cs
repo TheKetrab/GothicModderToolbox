@@ -40,8 +40,8 @@ namespace ApplicationGUI
             this.AT_SrcLangCombo = new System.Windows.Forms.ComboBox();
             this.label8 = new System.Windows.Forms.Label();
             this.AT_DstLangCombo = new System.Windows.Forms.ComboBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.AT_SrcLangText = new System.Windows.Forms.TextBox();
+            this.AT_DstLangText = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // AT_SpellcheckerBtn
@@ -60,11 +60,11 @@ namespace ApplicationGUI
             this.AT_InfoLabel.BackColor = System.Drawing.SystemColors.Control;
             this.AT_InfoLabel.Location = new System.Drawing.Point(3, 64);
             this.AT_InfoLabel.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.AT_InfoLabel.Multiline = true;
             this.AT_InfoLabel.Name = "AT_InfoLabel";
             this.AT_InfoLabel.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
             this.AT_InfoLabel.Size = new System.Drawing.Size(494, 100);
             this.AT_InfoLabel.TabIndex = 24;
+            this.AT_InfoLabel.Text = "";
             // 
             // AT_ReplaceBtn
             // 
@@ -169,29 +169,29 @@ namespace ApplicationGUI
             this.AT_DstLangCombo.Size = new System.Drawing.Size(88, 23);
             this.AT_DstLangCombo.TabIndex = 18;
             // 
-            // textBox1
+            // AT_SrcLangText
             // 
-            this.textBox1.Location = new System.Drawing.Point(149, 10);
-            this.textBox1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(33, 23);
-            this.textBox1.TabIndex = 19;
+            this.AT_SrcLangText.Location = new System.Drawing.Point(149, 10);
+            this.AT_SrcLangText.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.AT_SrcLangText.Name = "AT_SrcLangText";
+            this.AT_SrcLangText.Size = new System.Drawing.Size(33, 23);
+            this.AT_SrcLangText.TabIndex = 19;
             // 
-            // textBox2
+            // AT_DstLangText
             // 
-            this.textBox2.Location = new System.Drawing.Point(149, 37);
-            this.textBox2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(33, 23);
-            this.textBox2.TabIndex = 20;
+            this.AT_DstLangText.Location = new System.Drawing.Point(149, 37);
+            this.AT_DstLangText.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.AT_DstLangText.Name = "AT_DstLangText";
+            this.AT_DstLangText.Size = new System.Drawing.Size(33, 23);
+            this.AT_DstLangText.TabIndex = 20;
             // 
             // AutoTranslatorView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.textBox2);
+            this.Controls.Add(this.AT_DstLangText);
             this.Controls.Add(this.AT_SummaryLabel);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.AT_SrcLangText);
             this.Controls.Add(this.AT_ProgressBar);
             this.Controls.Add(this.AT_DstLangCombo);
             this.Controls.Add(this.AT_SpellcheckerBtn);
@@ -223,7 +223,7 @@ namespace ApplicationGUI
         private System.Windows.Forms.ComboBox AT_SrcLangCombo;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.ComboBox AT_DstLangCombo;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox AT_SrcLangText;
+        private System.Windows.Forms.TextBox AT_DstLangText;
     }
 }

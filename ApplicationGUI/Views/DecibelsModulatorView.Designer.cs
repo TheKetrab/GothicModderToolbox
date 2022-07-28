@@ -1,4 +1,6 @@
 ﻿
+using System.Drawing;
+
 namespace ApplicationGUI
 {
     partial class DecibelsModulatorView
@@ -37,8 +39,8 @@ namespace ApplicationGUI
             this.DM_IncVolumeLbl = new System.Windows.Forms.Label();
             this.DM_IncVolumeBtn = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.DM_Mp3Btn = new System.Windows.Forms.Button();
             this.DM_WavBtn = new System.Windows.Forms.Button();
+            this.DM_Mp3Btn = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.DM_IncVolumeSlider)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -59,15 +61,16 @@ namespace ApplicationGUI
             this.DM_InfoLabel.BackColor = System.Drawing.SystemColors.Control;
             this.DM_InfoLabel.Location = new System.Drawing.Point(3, 81);
             this.DM_InfoLabel.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.DM_InfoLabel.Multiline = true;
             this.DM_InfoLabel.Name = "DM_InfoLabel";
             this.DM_InfoLabel.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
             this.DM_InfoLabel.Size = new System.Drawing.Size(494, 83);
             this.DM_InfoLabel.TabIndex = 28;
+            this.DM_InfoLabel.Text = "";
             // 
             // DM_IncVolumeMaxRadioBtn
             // 
             this.DM_IncVolumeMaxRadioBtn.AutoSize = true;
+            this.DM_IncVolumeMaxRadioBtn.Checked = true;
             this.DM_IncVolumeMaxRadioBtn.Location = new System.Drawing.Point(3, 3);
             this.DM_IncVolumeMaxRadioBtn.Name = "DM_IncVolumeMaxRadioBtn";
             this.DM_IncVolumeMaxRadioBtn.Size = new System.Drawing.Size(137, 19);
@@ -83,12 +86,12 @@ namespace ApplicationGUI
             this.DM_IncVolumeDbRadioBtn.Name = "DM_IncVolumeDbRadioBtn";
             this.DM_IncVolumeDbRadioBtn.Size = new System.Drawing.Size(111, 19);
             this.DM_IncVolumeDbRadioBtn.TabIndex = 31;
-            this.DM_IncVolumeDbRadioBtn.TabStop = true;
             this.DM_IncVolumeDbRadioBtn.Text = "Increase volume";
             this.DM_IncVolumeDbRadioBtn.UseVisualStyleBackColor = true;
             // 
             // DM_IncVolumeSlider
             // 
+            this.DM_IncVolumeSlider.BackColor = System.Drawing.Color.White;
             this.DM_IncVolumeSlider.Location = new System.Drawing.Point(120, 28);
             this.DM_IncVolumeSlider.Name = "DM_IncVolumeSlider";
             this.DM_IncVolumeSlider.Size = new System.Drawing.Size(104, 45);
@@ -102,6 +105,7 @@ namespace ApplicationGUI
             this.DM_IncVolumeLbl.Size = new System.Drawing.Size(38, 15);
             this.DM_IncVolumeLbl.TabIndex = 33;
             this.DM_IncVolumeLbl.Text = "label1";
+            this.DM_IncVolumeLbl.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // DM_IncVolumeBtn
             // 
@@ -124,16 +128,6 @@ namespace ApplicationGUI
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Conversion";
             // 
-            // DM_Mp3Btn
-            // 
-            this.DM_Mp3Btn.Location = new System.Drawing.Point(16, 26);
-            this.DM_Mp3Btn.Name = "DM_Mp3Btn";
-            this.DM_Mp3Btn.Size = new System.Drawing.Size(75, 23);
-            this.DM_Mp3Btn.TabIndex = 0;
-            this.DM_Mp3Btn.Text = "To mp3";
-            this.DM_Mp3Btn.UseVisualStyleBackColor = true;
-            this.DM_Mp3Btn.Click += new System.EventHandler(this.DM_Mp3Btn_Click);
-            // 
             // DM_WavBtn
             // 
             this.DM_WavBtn.Location = new System.Drawing.Point(97, 26);
@@ -143,6 +137,16 @@ namespace ApplicationGUI
             this.DM_WavBtn.Text = "To wav";
             this.DM_WavBtn.UseVisualStyleBackColor = true;
             this.DM_WavBtn.Click += new System.EventHandler(this.DM_WavBtn_Click);
+            // 
+            // DM_Mp3Btn
+            // 
+            this.DM_Mp3Btn.Location = new System.Drawing.Point(16, 26);
+            this.DM_Mp3Btn.Name = "DM_Mp3Btn";
+            this.DM_Mp3Btn.Size = new System.Drawing.Size(75, 23);
+            this.DM_Mp3Btn.TabIndex = 0;
+            this.DM_Mp3Btn.Text = "To mp3";
+            this.DM_Mp3Btn.UseVisualStyleBackColor = true;
+            this.DM_Mp3Btn.Click += new System.EventHandler(this.DM_Mp3Btn_Click);
             // 
             // DecibelsModulatorView
             // 
