@@ -35,6 +35,7 @@ namespace ApplicationGUI.Dialogs
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.settingsDCtabPage = new System.Windows.Forms.TabPage();
             this.settingsATtabPage = new System.Windows.Forms.TabPage();
+            this.settingsCPtabPage = new System.Windows.Forms.TabPage();
             this.tabControl1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -81,6 +82,7 @@ namespace ApplicationGUI.Dialogs
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControl1.Controls.Add(this.settingsDCtabPage);
             this.tabControl1.Controls.Add(this.settingsATtabPage);
+            this.tabControl1.Controls.Add(this.settingsCPtabPage);
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tabControl1.Name = "tabControl1";
@@ -109,6 +111,17 @@ namespace ApplicationGUI.Dialogs
             this.settingsATtabPage.TabIndex = 1;
             this.settingsATtabPage.Text = "Auto Translator";
             this.settingsATtabPage.UseVisualStyleBackColor = true;
+            // 
+            // settingsCPtabPage
+            // 
+            this.settingsCPtabPage.Location = new System.Drawing.Point(4, 24);
+            this.settingsCPtabPage.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.settingsCPtabPage.Name = "settingsCPtabPage";
+            this.settingsCPtabPage.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.settingsCPtabPage.Size = new System.Drawing.Size(500, 201);
+            this.settingsCPtabPage.TabIndex = 2;
+            this.settingsCPtabPage.Text = "Custom Patterns";
+            this.settingsCPtabPage.UseVisualStyleBackColor = true;
             // 
             // SettingsDialog
             // 
@@ -139,5 +152,6 @@ namespace ApplicationGUI.Dialogs
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage settingsDCtabPage;
         private System.Windows.Forms.TabPage settingsATtabPage;
+        private System.Windows.Forms.TabPage settingsCPtabPage;
     }
 }

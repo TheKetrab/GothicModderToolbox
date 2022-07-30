@@ -28,6 +28,9 @@
     <Compile Update="Views\SettingsAutoTranslatorView.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Update="Views\SettingsCustomPatternsView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Update="Views\SettingsDubbingCheckerView.cs">
       <SubType>UserControl</SubType>
     </Compile>

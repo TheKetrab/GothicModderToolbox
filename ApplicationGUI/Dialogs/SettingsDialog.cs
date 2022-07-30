@@ -15,6 +15,7 @@ namespace ApplicationGUI.Dialogs
     {
         private SettingsDubbingCheckerView settingsDCView = new();
         private SettingsAutoTranslatorView settingsATView = new();
+        private SettingsCustomPatternsView settingsCPView = new();
 
         public SettingsDialog()
         {
@@ -22,33 +23,35 @@ namespace ApplicationGUI.Dialogs
 
             settingsDCView.Parent = this.settingsDCtabPage;
             settingsATView.Parent = this.settingsATtabPage;
+            settingsCPView.Parent = this.settingsCPtabPage;
 
             LoadOptions();
 
-            this.tabControl1.SelectedIndexChanged += (s, a) =>
-            {
-                // TODO: ta sama szerokosc wszystkich tabow sie dostosowuje
-            };
+            this.settingsDCtabPage.SizeChanged += (s, a) => AlignSize(settingsDCView, settingsDCtabPage);
+            this.settingsATtabPage.SizeChanged += (s, a) => AlignSize(settingsATView, settingsATtabPage);
+            this.settingsCPtabPage.SizeChanged += (s, a) => AlignSize(settingsCPView, settingsCPtabPage);
+
+            AlignSize(settingsDCView, settingsDCtabPage);
+            AlignSize(settingsATView, settingsATtabPage);
+            AlignSize(settingsCPView, settingsCPtabPage);
         }
 
-        protected override void OnResize(EventArgs e)
-        {
-            base.OnResize(e);
-            settingsDCView.Width = this.settingsDCtabPage.Width;
-            settingsATView.Width = this.settingsATtabPage.Width;
-        }
 
 
         public void LoadOptions()
         {
             settingsDCView.LoadOptions();
             settingsATView.LoadOptions();
+            settingsCPView.LoadOptions();
         }
 
         public void SaveOptions()
         {
             settingsDCView.SaveOptions();
             settingsATView.SaveOptions();
+            settingsCPView.SaveOptions();
+
+            SettingsManager.Instance.WriteConfig();
         }
 
         private void settingsCancelBtn_Click(object sender, EventArgs e)
@@ -64,6 +67,15 @@ namespace ApplicationGUI.Dialogs
         private void settingsApplyBtn_Click(object sender, EventArgs e)
         {
             SaveOptions();
+            Close();
         }
-    }
+
+
+        private void AlignSize(Control child, Panel parent)
+        {
+            child.Width = parent.Width;
+            child.Height = parent.Height;
+            child.Invalidate();
+        }
+}
 }

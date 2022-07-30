@@ -34,11 +34,31 @@ namespace GothicToolsLib.Patterns
 
         private const RegexOptions RegexOpt = RegexOptions.IgnoreCase | RegexOptions.IgnorePatternWhitespace;
 
+        protected abstract string Section { get; }
         protected abstract int Cnt { get; }
         protected abstract string[] Patterns { get; }
         protected abstract string[] PatternNames { get; }
 
         protected abstract int[] GroupsWithText { get; }
+
+        public List<CustomPattern> GetAsCustomPatterns()
+        {
+            List<CustomPattern> res = new List<CustomPattern>();
+
+            for (int i = 0; i < Cnt; i++)
+            {
+                res.Add(new CustomPattern()
+                {
+                    Id = $"CP_{Section}_{PatternNames[i]}",
+                    Section = Section,
+                    Name = PatternNames[i],
+                    Value = Patterns[i],
+                    Group = GroupsWithText[i]
+                });
+            }
+
+            return res;
+        }
     }
 
 }

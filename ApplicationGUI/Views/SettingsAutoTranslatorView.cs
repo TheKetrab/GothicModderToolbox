@@ -17,21 +17,6 @@ namespace ApplicationGUI.Views
             InitializeComponent();
         }
 
-
-        protected override void OnResize(EventArgs e)
-        {
-            this.Invalidate();
-        }
-
-        protected override void OnPaint(PaintEventArgs e)
-        {
-            this.inputPath.Width = this.Width;
-            this.outputPath.Width = this.Width;
-            this.spellcheckerPath.Width = this.Width;
-            this.advancedGroupBox.Width = this.Width;
-        }
-
-
         public void LoadOptions()
         {
             this.advancedApiKeyTextBox.Text = SettingsManager.Instance.AT_ApiKey;

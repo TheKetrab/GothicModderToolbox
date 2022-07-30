@@ -54,6 +54,7 @@ namespace GothicToolsLib.Patterns
         };
 
 
+        protected override string Section => "Dubbing";
         protected override int Cnt => cnt;
         protected override string[] Patterns => _patterns;
         protected override string[] PatternNames => _patternNames;

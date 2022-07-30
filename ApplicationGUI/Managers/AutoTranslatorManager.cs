@@ -18,7 +18,7 @@ namespace ApplicationGUI
         public async Task InvokeTranslator(IProgress<ProgressModel> progress)
         {
             TextPatternsProvider patternsProvider =
-                (SettingsManager.Instance.CP_Enabled)
+                (SettingsManager.Instance.ADV_CustomPatternsEnabled)
                     ? new SettingsTextPatternsProvider()
                     : new TextPatternsProvider();
 

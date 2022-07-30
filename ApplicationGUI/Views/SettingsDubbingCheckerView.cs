@@ -18,21 +18,6 @@ namespace ApplicationGUI.Views
             InitializeComponent();
         }
 
-        protected override void OnResize(EventArgs e)
-        {
-            this.Invalidate();
-        }
-
-        protected override void OnPaint(PaintEventArgs e)
-        {
-            this.dialogsPath.Width = this.Width;
-            this.dubbingPath.Width = this.Width;
-            this.itemsLookupPath.Width = this.Width;
-            this.itemsPath.Width = this.Width;
-            this.outputPath.Width = this.Width;
-        }
-
-
         public void LoadOptions()
         {
             this.dialogsPath.Path = SettingsManager.Instance.DC_DialogsPath;

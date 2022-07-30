@@ -19,7 +19,7 @@ namespace ApplicationGUI
         public async Task InvokeDialogParser(IProgress<ProgressModel> progress)
         {
             DubbingPatternsProvider patternsProvider =
-                (SettingsManager.Instance.CP_Enabled)
+                (SettingsManager.Instance.ADV_CustomPatternsEnabled)
                     ? new SettingsDubbingPatternsProvider()
                     : new DubbingPatternsProvider();
 
@@ -35,7 +35,7 @@ namespace ApplicationGUI
         public async Task InvokeItemParser(IProgress<ProgressModel> progress)
         {
             ItemPatternsProvider patternsProvider =
-                (SettingsManager.Instance.CP_Enabled)
+                (SettingsManager.Instance.ADV_CustomPatternsEnabled)
                     ? new SettingsItemPatternsProvider()
                     : new ItemPatternsProvider();
 

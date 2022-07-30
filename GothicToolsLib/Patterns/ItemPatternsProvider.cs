@@ -39,6 +39,7 @@ namespace GothicToolsLib.Patterns
             1
         };
 
+        protected override string Section => "Item";
 
         protected override int Cnt => cnt;
         protected override string[] Patterns => _patterns;
