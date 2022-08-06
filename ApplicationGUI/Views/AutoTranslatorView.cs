@@ -4,11 +4,13 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using ApplicationGUI.Annotations;
 using ApplicationGUI.Controls;
 using GothicToolsLib.Models;
 
@@ -18,10 +20,21 @@ namespace ApplicationGUI
     {
         private AutoTranslatorManager autoTranslatorManager = new();
 
+        private int _state = 0;
+        private int State { get => _state;
+            set { _state = value;
+                EnableButtonsRespectingState();
+            }
+        } // 0 = nothing, 1 = entries loaded, 2 = translated
+
+
         public AutoTranslatorView()
         {
             InitializeComponent();
             InitializeBindings();
+
+            DisableButtons();
+            EnableButtons();
         }
 
         private void InitializeBindings()
@@ -105,11 +118,20 @@ namespace ApplicationGUI
 
         private async void AT_TranslateBtn_Click(object sender, EventArgs e)
         {
+            if (string.IsNullOrEmpty(AT_SrcLangText.Text) || string.IsNullOrEmpty(AT_DstLangText.Text))
+            {
+                MessageBox.Show("First select source and destination languages!");
+                return;
+            }
+
             await Process("Translating...", "", async (progress) =>
             {
-                if (MessageBox.Show("Are you sure?", "", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                if (MessageBox.Show(
+                    $"You're going to translate from {AT_SrcLangText.Text} to {AT_DstLangText.Text}. Are you sure?",
+                    "", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
-                    await autoTranslatorManager.Translate(progress);
+                    await autoTranslatorManager.Translate(AT_SrcLangText.Text, AT_DstLangText.Text, progress);
+                    State = 2;
                 }
             });
         }
@@ -121,6 +143,8 @@ namespace ApplicationGUI
                 await autoTranslatorManager.InvokeTranslator(progress);
                 AT_SummaryLabel.Text = autoTranslatorManager.GetSummary();
             });
+
+            State = 1;
         }
 
         protected override void DisableButtons()
@@ -129,14 +153,13 @@ namespace ApplicationGUI
             AT_TranslateBtn.Enabled = false;
             AT_ReplaceBtn.Enabled = false;
             AT_SpellcheckerBtn.Enabled = false;
+            AT_SaveEntriesBtn.Enabled = false;
+            AT_LoadEntriesBtn.Enabled = false;
         }
 
         protected override void EnableButtons()
         {
-            AT_AnalyzeBtn.Enabled = true;
-            AT_TranslateBtn.Enabled = true;
-            AT_ReplaceBtn.Enabled = true;
-            AT_SpellcheckerBtn.Enabled = true;
+            EnableButtonsRespectingState();
         }
 
         private async void AT_ReplaceBtn_Click(object sender, EventArgs e)
@@ -145,6 +168,8 @@ namespace ApplicationGUI
             {
                 await autoTranslatorManager.Replace(progress);
             });
+
+            State = 3;
         }
 
         private async void AT_SpellcheckerBtn_Click(object sender, EventArgs e)
@@ -158,6 +183,41 @@ namespace ApplicationGUI
                 }
             });
 
+        }
+
+        private void AT_LoadEntriesBtn_Click(object sender, EventArgs e)
+        {
+            autoTranslatorManager.LoadEntries();
+            AT_SummaryLabel.Text = autoTranslatorManager.GetSummary();
+            State = 1;
+        }
+
+        private void AT_SaveEntriesBtn_Click(object sender, EventArgs e)
+        {
+            autoTranslatorManager.SaveEntries();
+            MessageBox.Show("Saved");
+        }
+
+        private void EnableButtonsRespectingState()
+        {
+            DisableButtons();
+            if (State >= 0)
+            {
+                AT_AnalyzeBtn.Enabled = true;
+                AT_LoadEntriesBtn.Enabled = true;
+            }
+
+            if (State >= 1)
+            {
+                AT_SaveEntriesBtn.Enabled = true;
+                AT_SpellcheckerBtn.Enabled = true;
+                AT_TranslateBtn.Enabled = true;
+            }
+
+            if (State >= 2)
+            {
+                AT_ReplaceBtn.Enabled = true;
+            }
         }
 
     }

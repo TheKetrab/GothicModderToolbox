@@ -32,13 +32,36 @@ namespace ApplicationGUI
 
         }
 
+        public void LoadEntries()
+        {
+            if (translator == null)
+            {
+                TextPatternsProvider patternsProvider =
+                    (SettingsManager.Instance.ADV_CustomPatternsEnabled)
+                        ? new SettingsTextPatternsProvider()
+                        : new TextPatternsProvider();
+
+                translator = new Translator(
+                    SettingsManager.Instance.AT_TranslateInputPath,
+                    SettingsManager.Instance.AT_TranslateOutputPath,
+                    SettingsManager.Instance.AT_Encoding,
+                    patternsProvider);
+            }
+            translator.DeserializeEntries();
+        }
+
+        public void SaveEntries()
+        {
+            translator.SerializeEntries();
+        }
+
         public string GetSummary()
         {
             return $"Total chars: {translator.TotalCharacters}{Environment.NewLine}" +
                    $"Total entries: {translator.TotalLines}";
         }
 
-        public async Task Translate(IProgress<ProgressModel> progress)
+        public async Task Translate(string sourceLang, string targetLang, IProgress<ProgressModel> progress)
         {
             if (translator == null)
             {
@@ -50,7 +73,9 @@ namespace ApplicationGUI
                 throw new Exception("Too many characters! Forbidden translation. You can change maximum in settings.");
             }
 
-            await translator.TranslateAsync(SettingsManager.Instance.AT_ApiKey, progress);
+            await translator.TranslateAsync(
+                SettingsManager.Instance.AT_ApiKey,
+                sourceLang, targetLang, progress);
         }
 
         public async Task Replace(IProgress<ProgressModel> progress)

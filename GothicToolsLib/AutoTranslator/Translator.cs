@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -52,6 +53,7 @@ namespace GothicToolsLib.AutoTranslator
                 });
         }
 
+        [Serializable]
         private struct ItemData
         {
             public int Id;
@@ -63,6 +65,26 @@ namespace GothicToolsLib.AutoTranslator
         }
 
         private List<ItemData> _entries = new();
+
+
+        public void SerializeEntries()
+        {
+            string entriesFile = Path.Combine(Utils.GetExecutablePath(), "G2MT_AT_entries.dat");
+            Stream stream = File.Open(entriesFile, FileMode.Create);
+            BinaryFormatter b = new BinaryFormatter();
+            b.Serialize(stream, _entries);
+            stream.Close();
+        }
+
+        public void DeserializeEntries()
+        {
+            string entriesFile = Path.Combine(Utils.GetExecutablePath(), "G2MT_AT_entries.dat");
+            Stream stream = File.Open(entriesFile,FileMode.Open);
+            BinaryFormatter b = new BinaryFormatter();
+            _entries = (List<ItemData>) b.Deserialize(stream);
+            stream.Close();
+
+        }
 
         public Translator(string inputPath, string outputPath, int inputEncoding, TextPatternsProvider provider)
         {
@@ -129,7 +151,7 @@ namespace GothicToolsLib.AutoTranslator
 
         }
 
-        public async Task TranslateAsync(string apiKey, IProgress<ProgressModel> progress = null)
+        public async Task TranslateAsync(string apiKey, string sourceLang, string targetLang, IProgress<ProgressModel> progress = null)
         {
             var converter = new ExpandoObjectConverter();
             for (int i=0; i< _entries.Count; i++)
@@ -139,8 +161,8 @@ namespace GothicToolsLib.AutoTranslator
                 var values = new Dictionary<string, string>
                 {
                     { "q", entry.Text },
-                    { "source", "pl" },
-                    { "target", "en" },
+                    { "source", sourceLang },
+                    { "target", targetLang },
                     { "format", "text" }
                 };
 
